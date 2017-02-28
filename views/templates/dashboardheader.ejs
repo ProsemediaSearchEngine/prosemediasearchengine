@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<title>Prosemedia Search Engine</title>
+    <link rel="shortcut icon" href="images/prose.jpg" type="image/x-icon">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+</style>
+<body class="w3-theme-l5">
+
+<!-- Navbar -->
+<div class="w3-top">
+ <ul class="w3-navbar w3-left-align w3-large w3-blue" style="max-height: 50px;">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><img src="/images/proseblue.jpg" style="height:50px;width:100px" alt="Avatar"></li>
+    <li class="w3-hide-small w3-dropdown-hover" style="color: white;">
+    <a href="#" class="w3-padding-large w3-hover-white" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green"><%=newusers.length%></span></a>     
+    <div class="w3-dropdown-content w3-white w3-card-4 scrollable">
+    <p style="text-align: center; color: #2196F3;">NOTIFICATIONS</p>
+    <% if(newusers.length==0) {%>
+    <h4>No notifications yet...</h4>
+    <%} else{%>
+      <% newusers.forEach(function(newusers){%>
+      <div class="pendinguser_<%=newusers._id%>">
+      <div class="w3-card-2 w3-round w3-white w3-center">
+        <div class="w3-container">
+         <%=newusers.email%><br><span>Name: <%=newusers.fullname%><br> Purpose: Need access</span>
+            
+          <div class="w3-row w3-opacity">
+            <div class="w3-half">
+              <button class="w3-btn w3-green w3-btn-block w3-section updateStatus" data-id="<%=newusers._id%>" title="Accept"><i class="fa fa-check"></i></button>
+            </div>
+            <div class="w3-half">
+              <button class="w3-btn w3-red w3-btn-block w3-section declineAccessRequest" data-id="<%=newusers._id%>" title="Decline"><i class="fa fa-remove"></i></button>
+            </div>
+            </div>
+        </div>
+      </div>
+      <br>
+      </div>
+      <%})}%>
+    </div>
+    </li>
+
+    <li class="w3-hide-small w3-dropdown-hover">
+    <a href="#" style="color: white;" class="w3-padding-large w3-hover-white" title="Bulk upload"><i class="fa fa-upload"></i> Bulk upload</a>     
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#" class="bulk-linkedin-button">Include sites in bulk (LINKEDIN)</a>
+      <a href="#" class="bulk-other-button">Include sites in bulk (OTHER)</a>
+      <a href="#" class="bulk-pdf-button">Include pdfs in bulk (ANY)</a>
+
+    </div>
+    </li>
+
+    <li class="w3-hide-small w3-dropdown-hover">
+    <a href="#" style="color: white;" class="w3-padding-large w3-hover-white" title="Individual upload"><i class="fa fa-upload"></i> Individual upload</a>     
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#" class="onebyonelinkedin">Include LinkedIn URL</a>
+      <a href="#" class="onebyoneother">Include Other URL</a>
+      <a href="#" class="onebyonepdf">Include PDF file</a>
+    </div>
+    </li>
+
+    <li class="w3-hide-small w3-dropdown-hover">
+    <a href="#" style="color: white;" class="w3-padding-large w3-hover-white" title="Other Actions"><i class="fa fa-arrow-down"></i> Other Actions</a>     
+    <div class="w3-dropdown-content w3-white w3-card-4">
+      <a href="#" class="viewallurl">View all portfolios</a>
+      <hr>
+      <a href="/deleteallportfolios"><button type="button" class="btn btn-danger">Delete all portfolios</button></a>
+
+    </div>
+    </li>
+
+  </li>
+  <li class="w3-hide-small w3-right"><a href="#" class="w3-padding-large w3-hover-white" title="My Account"><img src="/images/prose.jpg" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a></li>
+  <li class="w3-hide-small w3-right"><a href="/logout" class="w3-padding-large w3-hover-white" title="LOGOUT"><img src="images/logout.jpg" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a></li>
+ </ul>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:51px">
+  <ul class="w3-navbar w3-left-align w3-large w3-theme">
+    <li><a class="w3-padding-large" href="#">Link 1</a></li>
+    <li><a class="w3-padding-large" href="#">Link 2</a></li>
+    <li><a class="w3-padding-large" href="#">Link 3</a></li>
+    <li><a class="w3-padding-large" href="#">My Profile</a></li>
+  </ul>
+</div>

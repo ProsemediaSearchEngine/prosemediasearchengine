@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<title>PROSE MEDIA SEARCH ENGINE</title>
+<link rel="icon" href="images/prose.jpg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/login.js"></script>
+<link rel="stylesheet" href="css/login.css">
+
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size: 16px;}
+img {margin-bottom: -8px;}
+.mySlides {display: none;}
+</style>
+<body class="w3-content w3-black" style="max-width:1500px;">
+
+<!-- Header with Slideshow -->
+<header class="w3-display-container w3-center">
+
+  <div class="mySlides w3-animate-opacity">
+
+    <img class="w3-image" src="http://psy-che.gr/wp-content/uploads/2013/11/EKFRASTIKI-GRAFI_I.jpg" alt="Image 1" style="min-width:500px" width="1500" height="1000">
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:36%">
+    <div class="panel panel-primary">
+    <div class="panel-heading"><%=message%></div>
+  </div>
+      <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <h1 class="w3-xlarge">PROSEMEDIA SEARCH ENGINE</h1>
+        <hr class="w3-opacity">
+    <form action="login" method="post">
+      <input type="text" name="email" class="form-control" placeholder="Enter your email"><br>
+      <input type="password" name="password" class="form-control" placeholder="Enter Password"><br>
+        <p><input type="submit" class="w3-btn-block w3-blue w3-round" value="Login"></p>
+    </form>
+        <p>Super simple search: only for prosemedia team.</p>
+        <p><% include templates/followus.ejs%></p>
+      </div>
+    </div>
+  </div>
+  <div class="mySlides w3-animate-opacity">
+    <img class="w3-image" src="http://psy-che.gr/wp-content/uploads/2013/11/EKFRASTIKI-GRAFI_I.jpg" alt="Image 2" style="min-width:500px" width="1500" height="1000">
+    <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
+    <div class="panel panel-danger">
+      <div class="panel-heading requestaccesserror">REQUEST ACCESS PAGE</div>
+    </div>
+      <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
+        <h1 class="w3-xlarge">PROSEMEDIA SEARCH ENGINE</h1>
+        <hr class="w3-opacity">
+        <p>Request access to Prosemedia team...</p>
+        <form action="request" method="post">
+          <input type="text" name="fullname" placeholder="Enter Full Name" class="form-control" required="true"><br>
+          <input type="email" name="email" placeholder="Enter your email" class="form-control raemail" required placeholder="Enter a valid email address"><br>
+          <input type="password" name="password" class="form-control password" placeholder="Enter Password" required="true"><br>
+          <input type="submit" class="w3-btn-block w3-red w3-round" value="Request Access">
+        </form><br>
+        <p>Super simple search: only for prosemedia team.</p>
+        <p><% include templates/followus.ejs%></p>
+      </div>
+    </div>
+  </div>
+
+  <a class="w3-btn w3-black w3-padding w3-display-right w3-margin-right w3-round w3-hide-small w3-hover-light-grey togglerequestandlogin" onclick="plusDivs(1)">REQUEST ACCESS <i class="fa fa-angle-right"></i></a>
+  <a class="w3-btn-block w3-black w3-padding w3-hide-large w3-hide-medium" onclick="plusDivs(1)">Take Tour <i class="fa fa-angle-right"></i></a>
+</header>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-light-grey w3-center w3-xlarge">
+  <div class="w3-section">
+    <a href="https://www.facebook.com/ProseMedia/" target="_blank"><i class="fa fa-facebook-official w3-hover-text-indigo"></i></a>
+    <a href="https://blog.prosemedia.com/" target="_blank"><i class="fa fa-share-alt w3-hover-text-purple"></i></a>
+    <a href="https://www.pinterest.com/prosemedia/" target="_blank"><i class="fa fa-pinterest-p w3-hover-text-red"></i></a>
+    <a href="https://www.youtube.com/user/ProseMedia" target="_blank"><i class="fa fa-youtube w3-hover-text-red"></i></a>
+    <a href="https://twitter.com/prose" target="_blank"><i class="fa fa-twitter w3-hover-text-light-blue"></i></a>
+    <a href="https://www.linkedin.com/company/prose" target="_blank"><i class="fa fa-linkedin w3-hover-text-indigo"></i></a>
+  </div>
+</footer>
+
+<script>
+// Slideshow
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+</script>
+
+</body>
+</html>
+<!-- <center>
+<%=message%>
+	<h1>Request Access</h1>
+		<form action="request" method="post">
+			<input type="text" name="fullname" placeholder="Enter Full Name" value="shubham yeole">
+			<input type="text" name="email" placeholder="Enter your email" value="shubham20.yeole@gmail.com">
+			<input type="password" name="password" placeholder="Enter Password" value="shubham20">
+			<input type="password" name="cpassword" placeholder="Confirm Password" value="shubham20">
+			<input type="submit" value="Request Access">
+		</form>
+
+	<h1>Login</h1>
+		<form action="login" method="post">
+			<input type="text" name="email" placeholder="Enter your email">
+			<input type="password" name="password" placeholder="Enter Password">
+			<input type="submit" value="Login">
+		</form>
+
+	<h1>Reset Password</h1>
+		<form action="reset" method="post">
+			<input type="text" name="email" placeholder="Enter your email">
+			<input type="submit" value="Reset Password">
+		</form>
+</center> -->

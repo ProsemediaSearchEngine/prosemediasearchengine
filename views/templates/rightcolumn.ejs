@@ -1,0 +1,79 @@
+    <div class="w3-col m2">
+      <div class="w3-card-2 w3-round w3-white w3-center">
+        <div class="w3-container"><br>
+          <p>PROSEMEDIA PRODUCT:</p>
+          <img src="/images/prose.jpg" alt="Forest" style="width:100%;">
+          <br><br>
+          <p><strong>EMAIL: support@prosemedia.com</strong></p>
+          <p>PHONE: (800) PROSE-40</p>
+          <p><a href="https://www.prosemedia.com/" target="_blank"><button class="w3-btn w3-btn-block w3-theme-l4">READ MORE</button></a></p>
+        </div>
+      </div>
+      <br>
+      <!-- <div class="w3-card-2 w3-round w3-white w3-padding-16 w3-center">
+        <p>NEW USERS NEED PLATFORM ACCESS</p>
+      </div> -->
+          <% bug.forEach(function(bug){%>
+            <div class="w3-container w3-round w3-theme-l4 w3-center w3-border w3-theme-border w3-margin-bottom w3-hide-small add-padding-to-bug-display">
+              <span onclick="this.parentElement.style.display='none'" class="w3-hover-text-grey w3-closebtn">
+                <i class="fa fa-remove"></i>
+              </span>
+              <p><strong>BUG NAME:<br><%=bug.bug%></strong></p>
+              <p style="text-align: center;"><img class="bugimage" src="<%=bug.bugurl%>" width="60" height="60"></p>
+              <p><strong>By:</strong><br> <%= bug.postedby %></p>
+              <p><strong>At:</strong><br><%= bug.datetime %></p>
+              <p><strong>Description:</strong><br><%= bug.description %></p>
+              <% if(bug.status=='UN_SOLVED'){%>
+              <p><strong>Status:</strong><br><span class="btn btn-danger">Unsolved</span></p>
+              <% }else if(bug.status=='WORK_IN_PROGRESS'){%>
+              <p><strong>Status:</strong><br><span class="btn btn-warning">Work in progress</span></p>
+              <% }else if(bug.status=='BUG_SOLVED'){ %>
+              <p><strong>Status:</strong><br><span class="btn btn-info">All set (bug solved)</span></p>
+              <%}%>
+              <hr class="w3-black">
+              <p><strong>Change Status?</strong>
+              <form action="changebugstatus" method="post">
+                <input type="hidden" name="loginuserid" value="<%=currentuser._id %>">
+                <input type="hidden" name="bugid" value="<%=bug._id %>">
+                <input type="hidden" name="bugname" value="<%=bug.bug %>">
+                <select name="changebugstatus" class="form-control">
+                  <option value="default">SELECT STATUS</option>
+                  <option value="BWIP">WORK IN PROGRESS</option>
+                  <option value="BS">SOLVED</option>
+                  <option value="BD">DELETE</option>
+                </select><br>
+                <input type="submit" class="btn btn-primary" style="width: 100%" value="UPDATE STATUS">
+              </form>
+              </p>
+            </div>
+          <%})%>
+      
+      <br>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+      <% newusers.forEach(function(newusers){%>
+      <div class="pendinguser_<%=newusers._id%>">
+        <div class="w3-card-2 w3-round w3-white w3-center">
+          <div class="w3-container">
+            <h4><%=newusers.email%></h4>
+              <img src="/images/defaultdp.jpg" alt="Avatar" style="width:50%"><br><br>
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <span class="alertforaccess"><%=newusers.fullname%></span>
+                  <div class="w3-row w3-opacity">
+                  <div class="w3-half">
+                    <button class="w3-btn w3-green w3-btn-block w3-section updateStatus" data-id="<%=newusers._id%>" title="Accept"><i class="fa fa-check"></i></button>
+                  </div>
+                  <div class="w3-half">
+                    <button class="w3-btn w3-red w3-btn-block w3-section declineAccessRequest" data-id="<%=newusers._id%>" title="Decline"><i class="fa fa-remove"></i></button>
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      <br>
+      </div>
+      <%})%>            
+    <!-- End Right Column -->
+    </div>

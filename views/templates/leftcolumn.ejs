@@ -1,0 +1,106 @@
+    <div class="w3-col m3">
+      <!-- Profile -->
+      <div class="w3-card-2 w3-round w3-white">
+        <div class="w3-container">
+         <h4 class="w3-center"><h1></h1></h4>
+         <p class="w3-center"><img src="<%=currentuser.photo%>" class="w3-circle dp" id="dp" style="height:106px;width:106px" alt="Avatar"></p>
+         <center>
+         <form method="post" action="uploaddp" enctype="multipart/form-data">
+         <br><a href="#" class="profileimagelinktag">Upload profile image</a>
+          <input type="file" name="file" id="profileimagefiletag" class="profileimagefiletag" required="true" style="display: none;" accept="image/*"><br>
+          <input type="hidden" name="id" value="<%=currentuser._id%>"><br>
+          <input type="submit" class="btn btn-primary submit-profile-button" value="SAVE IMAGE">
+          <p class="profilepicerror"></p>
+          </form>
+          </center>
+         <hr>
+         <p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i><%=currentuser.fullname%></p>
+         <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i><%=currentuser.email%></p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 
+         </p>
+        </div>
+      </div>
+      <br>
+      
+      <!-- Accordion -->
+      <div class="w3-card-2 w3-round">
+        <div class="w3-accordion w3-white">
+          <button onclick="myFunction('Demo1')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Saved Portfolios</button>
+          <div id="Demo1" class="w3-accordion-content w3-container">
+          <br>
+            <% bookmarkportfolio.forEach(function(bookmarkportfolio){%>
+            <div class="w3-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small" id="show_<%=bookmarkportfolio._id%>">
+            <br>
+              <div class="deleteportfoliobookmark" id="<%=bookmarkportfolio._id%>"><span class="w3-hover-text-grey w3-closebtn">
+                <i class="fa fa-remove"></i>
+              </span></div>
+        <p><strong><span style="float: left">Date</span> <span style="float: right"></span></strong></p>
+
+        <p><a class="previewlink"><%=bookmarkportfolio.url%></a></p>
+      </div>
+              <br>
+            <%})%>  
+            <hr>        
+          </div>
+          <button onclick="myFunction('Demo2')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Saved Searches</button>
+          <div id="Demo2" class="w3-accordion-content w3-container"><br>
+          <% bookmark.forEach(function(bookmark){%>
+            <p class="w3-tag w3-small w3-theme bookmakshow" style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></p><br>
+          <%})%>          
+          </div>
+          <button onclick="myFunction('Demo3')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+          <div id="Demo3" class="w3-accordion-content w3-container">
+         <div class="w3-row-padding">
+         <br>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+           <div class="w3-half">
+             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
+           </div>
+         </div>
+          </div>
+        </div>      
+      </div>
+      <br>
+      
+      <!-- Interests --> 
+      <div class="w3-card-2 w3-round w3-white w3-hide-small">
+        <div class="w3-container">
+          <h4>BOOKMARK</h4>
+          <p>
+          <% bookmark.forEach(function(bookmark){%>
+            <span class="w3-tag w3-small w3-theme bookmakshow" style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></span>
+          <%})%>
+          </p>
+        </div>
+      </div>
+      <br>
+
+      <div class="w3-card-2 w3-round w3-white w3-padding-32 w3-center">
+      <div class="w3-container">
+        <p><i class="fa fa-bug w3-xxlarge"></i></p>
+        <form method="post" action="uploaddbug" enctype="multipart/form-data">
+          <input type="file" name="file" accept="image/*"><br>
+          <input type="text" name="bug" class="input" placeholder="PLEASE SUBMIT BUGS IF FOUND"><br><br>
+          <textarea name="description" class="textarea" placeholder="PLEASE TELL US MORE ABOUT BUG YOU FOUND"></textarea><br><br>
+          <input type="submit" class="btn btn-primary" value="SUBMIT BUG DESCRIPTION">
+        </form>
+      </div>
+      <!-- Alert Box -->
+      </div>  
+    
+    <!-- End Left Column -->
+    </div>

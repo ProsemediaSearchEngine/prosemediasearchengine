@@ -1,0 +1,64 @@
+ <div class="w3-col m7">
+    
+
+      <!-- FIRST SECTION -->
+        <div class="w3-row-padding">
+          <div class="w3-col m12">
+            <div class="w3-card-2 w3-round w3-white">
+            <div class="panel panel-info">
+    <div class="panel-heading">
+      <center><%=currentuser.loadmessage %></center>
+    </div>
+  </div>
+              <div class="w3-container w3-padding">
+                  <input type="text" class="searchinputfield" placeholder="What're we looking for ?"><br><br>
+                  <button type="button" class="w3-btn w3-red w3-blue searchsubmit"><i class="fa fa-search"> </i> Search</button> 
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Second Section -->
+      <div class="w3-container w3-card-2 w3-white w3-round w3-margin searchresultpannel"><br>
+        <div class="panel panel-default">
+          <div class="panel-heading"> 
+          <h4>Search Result will appear here</h4>       
+          <span class="w3-right w3-opacity">
+          <img src="/images/prose.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px; margin-top: -50px"></span>
+          </div>
+          <div class="panel-body"><div id="searchload"></div>
+          <div id="searchresult"></div>
+          <hr>
+          <input type="hidden" id="bookmarkeyword">
+          <input type="hidden" id="emailresult">
+            <div id="bookmarkandsendemail" class="disableclick">
+              <span id="bookmark"><a href="" id="bookmarklink"><i class="fa fa-bookmark" aria-hidden="true"></i> BOOKMARK</a></span>
+              <span id="sendemailinsearch">
+                  <div class="input_fields_wrap">
+                      <p class="add_field_button"> <b>Add More:</b> <i class="fa fa-plus"></i></button>
+                      <div><input type="text" class="sendresultinemails" placeholder="Enter Email"></div><br>
+                  </div>
+                <button type="button" class="btn btn-primary" id="sendemailbutton">SEND THIS RESULT IN EMAIL</button>
+                </span>
+            </div>
+          <hr>              
+          </div>
+        </div>
+        <hr class="w3-clear">
+      </div> 
+
+      <!-- Third Section -->
+        <div class="w3-container w3-card-2 w3-white w3-round w3-margin" id="viewallsection"><br>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>View All Portfolios</h4>       
+              <span class="w3-right w3-opacity">
+              <img src="/images/prose.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px; margin-top: -50px"></span>
+            </div>
+            <div class="panel-body"><% include ../templates/viewall.ejs %></div>
+          </div>
+         <div id="showsearch"></div> 
+
+        </div>
+
+</div>
