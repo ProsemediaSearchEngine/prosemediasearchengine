@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var scraperjs = require('scraperjs');
 // mongodb://<dbuser>:<dbpassword>@ds153609.mlab.com:53609/sonali
 var collections = ["users", "urldata", "bookmark", "bookmarkportfolio"]
-var db = mongojs('mongodb://sonalipatil:sonalipatil@ds153609.mlab.com:53609/sonali', collections)
+var db = mongojs('mongodb://prosemedia:prosemedia@ds27145.mlab.com:27145/prosemedia', collections)
 var app = express();
 var ObjectId = mongojs.ObjectId;
 var session = require('client-sessions');
