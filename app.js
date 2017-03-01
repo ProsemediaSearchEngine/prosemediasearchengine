@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var scraperjs = require('scraperjs');
 // mongodb://<dbuser>:<dbpassword>@ds153609.mlab.com:53609/sonali
 var collections = ["users", "urldata", "bookmark", "bookmarkportfolio"]
-var db = mongojs('mongodb://prosemedia:prosemedia@ds027145.mlab.com:27145/prosemedia', collections)
+var db = mongojs('***************************', collections)
 var app = express();
 var ObjectId = mongojs.ObjectId;
 var session = require('client-sessions');
@@ -16,10 +16,10 @@ var Client = require('ftp');
 var JSFtp = require("jsftp");
 var fs = require('fs');
 var config = {
-  host: 'ftp.byethost7.com',
+  host: 'ftp.************.com',
   port: 21,
-  user: 'b7_19750162',
-  password: 'prosemedia12'
+  user: '*************',
+  password: '***************'
 }
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
@@ -29,7 +29,7 @@ var smtpTransport = nodemailer.createTransport(smtpTransport({
     host : "smtp.sendgrid.net",
     secureConnection : false,
     port: 587,
-    auth : {user : "apikey", pass : "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"}
+    auth : {user : "*********", pass : "******************************"}
 }));
 
 function sendEmail(email, subject, title, message){
@@ -349,6 +349,14 @@ app.post('/savepdfs', function(req, res){
   res.redirect("/");
 });
 
+app.post('/uploadOnePdf', function(req, res){       
+ var file = req.files.file;
+  var timestamp = new Date().valueOf();
+  var c = new Client();
+  var portfoliourl = 'http://prosemedia.byethost7.com/prosemedia/portfolios/prosemedia-'+timestamp+"-"+file.originalFilename;
+  pdfparser(req.session.users.fullname, file.path, portfoliourl, file.originalFilename, timestamp);
+  res.redirect("/");
+});
 
 function uploadPDF(filepath, originalFilename, timestamp){
   var Client = require('ftp'); 
@@ -595,12 +603,6 @@ function formatLinkedinUrl(linkedinurl){
   if(linkedinurl.charAt(last)==='/'){linkedinurl = linkedinurl.replace('/', '')}
   return linkedinurl;
 }
-app.post('/saveurlindividually', function(req, res){       
-  var url = req.body.url;
-  var name = req.session.users.fullname;
-  saveOtherBulkSite(url, name);
-  res.redirect("/");
-});
 
 app.post('/saveSiteText', function(req, res){       
   var url = req.body.url;

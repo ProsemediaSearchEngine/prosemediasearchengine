@@ -429,9 +429,9 @@ $(document).on("click","#save_one_url_button",function() { $("#save_one_url_subm
 $(document).on("click",".onebyonepdf",function() {
 $("#modaldivLabel").html("Upload portfolio in PDF format.");
   $(".modalbutton").click();
-$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> This section is basically to upload resumes or portfolios in PDF format. User can upload one or multiple PDF files to our server.<br><br><span class="alert"> Only PDF format are allowed.</span></div><div class="col-md-6">'+
+$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> This section is basically to upload resumes or portfolios in PDF format. User can upload multiple PDF files to our server from <b>Include PDF in bulk</b> from <b>Bulk upload dropdown</b>.<br><br><span class="alert"> Only PDF format are allowed.</span></div><div class="col-md-6">'+
         '<div>'+
-          '<form action="saveurlindividually" method="post">'+
+          '<form action="uploadOnePdf" method="post" enctype="multipart/form-data">'+
             '<input type="file" name="file" accept="application/pdf" required="true"><br>'+
             '<input type="submit" style="display: none;" id="save_one_pdf_submit" value="submit">'+
           '</form>'+
