@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var scraperjs = require('scraperjs');
 // mongodb://<dbuser>:<dbpassword>@ds153609.mlab.com:53609/sonali
 var collections = ["users", "urldata", "bookmark", "bookmarkportfolio"]
-var db = mongojs('***************************', collections)
+var db = mongojs('mongodb://prosemedia:prosemedia@ds027145.mlab.com:27145/prosemedia', collections)
 var app = express();
 var ObjectId = mongojs.ObjectId;
 var session = require('client-sessions');
@@ -16,10 +16,10 @@ var Client = require('ftp');
 var JSFtp = require("jsftp");
 var fs = require('fs');
 var config = {
-  host: 'ftp.************.com',
+  host: 'ftp.byethost7.com',
   port: 21,
-  user: '*************',
-  password: '***************'
+  user: 'b7_19750162',
+  password: 'prosemedia12'
 }
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
@@ -29,9 +29,8 @@ var smtpTransport = nodemailer.createTransport(smtpTransport({
     host : "smtp.sendgrid.net",
     secureConnection : false,
     port: 587,
-    auth : {user : "*********", pass : "******************************"}
+    auth : {user : "apikey", pass : "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"}
 }));
-
 
 function sendEmail(email, subject, title, message){
   var emailBody = '<html><body style="padding:40px;"><header style="background-color: #2196F3; padding: 10px !important; margin:0px !important;"><h1 style="color: #E3F2FD; text-align:center">Prosemedia Search Result</h1></header><div><div style="padding: 3%;"><br><h1>[TITLE]</h1><br>[MESSAGE]<br><br><br>Best, Prosemedia team,<br><br><br><br></div><footer style="background-color: #2196F3; padding: 3px !important; margin:0px !important;color: #E3F2FD; text-align: center; padding: 2%;">&#169; 2017 prosemedia(dot)com. All Rights Reserved.</footer></body></html>';
@@ -400,7 +399,7 @@ function pdfparser(name, path, portfoliourl, originalFilename, timestamp){
     console.log(extracturls);
     var email = extractEmails(data); if(email===null || email==='') email = "Update..";
     var phone = extractPhone(data); if(phone===null || phone==='') phone = "Update..";
-    var newPortfolio = {postedby: name,url: portfoliourl, title: data.substring(0, 50), body: data, email: email, phone: phone, comment: "No comments yet", stars: 0}
+    var newPortfolio = {postedby: name,url: portfoliourl, title: data.substring(5, 50), body: data, email: email, phone: phone, comment: "No comments yet", stars: 0}
     db.urldata.insert(newPortfolio);
     uploadPDF(path, originalFilename, timestamp);   
   });

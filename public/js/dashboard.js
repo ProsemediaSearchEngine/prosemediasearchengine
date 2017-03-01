@@ -13,11 +13,11 @@ $( document ).ready(function() {
       for(i=0; i<result.length; i++){
         html = html + '<tr>'+
           '<td>'+result[i].postedby+'</td>'+
-          '<td><p class="linkindatatable"><span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a class="previewlink">'+result[i].url+'</a></span></p></td>'+
-          '<td><p contenteditable="true">'+result[i].title+'</p></td>'+
-          '<td><p contenteditable="true" class="updateEmail" data-id="'+result[i]._id+'">'+result[i].email+'</p></td>'+
-          '<td><p contenteditable="true" class="updatePhone" data-id="'+result[i]._id+'">'+result[i].phone+'</p></td>'+
-          '<td><p contenteditable="true" class="updateComment" data-id="'+result[i]._id+'">'+result[i].comment+'</p></td>'+
+          '<td><p class="linkindatatable"><span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a title="'+result[i].url+'" class="previewlink">'+result[i].url+'</a></span></p></td>'+
+          '<td><p contenteditable="true" title="'+result[i].title+'">'+result[i].title+'</p></td>'+
+          '<td><p contenteditable="true" title="'+result[i].email+'" class="updateEmail" data-id="'+result[i]._id+'">'+result[i].email+'</p></td>'+
+          '<td><p contenteditable="true" title="'+result[i].phone+'" class="updatePhone" data-id="'+result[i]._id+'">'+result[i].phone+'</p></td>'+
+          '<td><p contenteditable="true" title="'+result[i].comment+'" class="updateComment" data-id="'+result[i]._id+'">'+result[i].comment+'</p></td>'+
           '<td><span class="removethis" data-id="'+result[i]._id+'"><i class="fa fa-remove"></i> <b style="display: none;">'+result[i].body+'</b></span></td>'+
           '</tr>';
       }
