@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var scraperjs = require('scraperjs');
 // mongodb://<dbuser>:<dbpassword>@ds153609.mlab.com:53609/sonali
 var collections = ["users", "urldata", "bookmark", "bookmarkportfolio"]
-var db = mongojs('***************************', collections)
+var db = mongojs('mongodb://prosemedia:prosemedia@ds027145.mlab.com:27145/prosemedia', collections)
 var app = express();
 var ObjectId = mongojs.ObjectId;
 var session = require('client-sessions');
@@ -16,10 +16,10 @@ var Client = require('ftp');
 var JSFtp = require("jsftp");
 var fs = require('fs');
 var config = {
-  host: 'ftp.************.com',
+  host: 'ftp.byethost7.com',
   port: 21,
-  user: '*************',
-  password: '***************'
+  user: 'b7_19750162',
+  password: 'prosemedia12'
 }
 var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
@@ -29,7 +29,7 @@ var smtpTransport = nodemailer.createTransport(smtpTransport({
     host : "smtp.sendgrid.net",
     secureConnection : false,
     port: 587,
-    auth : {user : "*********", pass : "******************************"}
+    auth : {user : "apikey", pass : "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"}
 }));
 
 function sendEmail(email, subject, title, message){
@@ -232,6 +232,24 @@ app.post('/removeurl', function(req, res){
     res.send("Deleted");
   }); 
 });
+
+app.post('/deleteUser', function(req, res){
+  var id = req.body.id;
+  var ObjectID = require('mongodb').ObjectID;
+  var o_id = new ObjectID(id);
+  db.users.remove({'_id': o_id}, function (err, deleteUser) {
+    res.send("Deleted");
+  }); 
+});
+
+app.post('/abortUser', function(req, res){
+  var id = req.body.id;
+  var ObjectID = require('mongodb').ObjectID;
+  var o_id = new ObjectID(id);
+  db.users.update({'_id': o_id},{$set : {"status": false}},{upsert:true,multi:false});
+  res.send("Deleted"); 
+});
+
 
 app.post('/updateComment', function(req, res){
   var id = req.body.id;

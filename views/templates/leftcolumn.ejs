@@ -16,7 +16,6 @@
          <hr>
          <p><i class="fa fa-id-card fa-fw w3-margin-right w3-text-theme"></i><%=currentuser.fullname%></p>
          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i><%=currentuser.email%></p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 
          </p>
         </div>
       </div>
@@ -53,8 +52,8 @@
          <div class="w3-row-padding">
          <br>
           <% allusers.forEach(function(allusers){%>
-            <div class="w3-full">
-            <div class="panel panel-default">
+            <div class="w3-full" id="panel-<%=allusers._id%>">
+            <div class="panel panel-info">
               <div class="panel-heading">User name: <%=allusers.fullname%></div>
               <div class="panel-body">
               Email: <%=allusers.email%><br>
@@ -68,10 +67,10 @@
               <% if(allusers.admin==false){%>
                 Normal User
               <%}%>
-              <br>
+              <hr>
                 <% if(currentuser.superadmin==true && allusers.email!=currentuser.email && allusers.superadmin==false){%>
-                    <a href="#">Delete this User</a>
-                    <a href="#">Abort platform access</a>
+                    <button class="btn btn-danger deleteUser" data-id="<%=allusers._id%>">Delete User</button>
+                    <button class="btn btn-warning abortUser" data-id="<%=allusers._id%>">Abort access</button>
                  <!--  <% if(allusers.admin==false){%>
                     <a href="#">Give Admin access</a>
                   <%}else{%>

@@ -13,6 +13,35 @@
       <!-- <div class="w3-card-2 w3-round w3-white w3-padding-16 w3-center">
         <p>NEW USERS NEED PLATFORM ACCESS</p>
       </div> -->
+          
+            <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+      <% newusers.forEach(function(newusers){%>
+      <div class="pendinguser_<%=newusers._id%>">
+        <div class="w3-card-2 w3-round w3-white w3-center">
+          <div class="w3-container">
+            <h4><%=newusers.email%></h4>
+              <img src="/images/defaultdp.jpg" alt="Avatar" style="width:50%"><br><br>
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <span class="alertforaccess"><%=newusers.fullname%></span>
+                  <div class="w3-row w3-opacity">
+                  <div class="w3-half">
+                    <button class="w3-btn w3-green w3-btn-block w3-section updateStatus" data-id="<%=newusers._id%>" title="Accept"><i class="fa fa-check"></i></button>
+                  </div>
+                  <div class="w3-half">
+                    <button class="w3-btn w3-red w3-btn-block w3-section declineAccessRequest" data-id="<%=newusers._id%>" title="Decline"><i class="fa fa-remove"></i></button>
+                  </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      <br>
+      </div>
+      <%})%>
+
+
           <% bug.forEach(function(bug){%>
             <div class="w3-container w3-round w3-theme-l4 w3-center w3-border w3-theme-border w3-margin-bottom w3-hide-small add-padding-to-bug-display">
               <span onclick="this.parentElement.style.display='none'" class="w3-hover-text-grey w3-closebtn">
@@ -48,32 +77,6 @@
             </div>
           <%})%>
       
-      <br>
-  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-      <% newusers.forEach(function(newusers){%>
-      <div class="pendinguser_<%=newusers._id%>">
-        <div class="w3-card-2 w3-round w3-white w3-center">
-          <div class="w3-container">
-            <h4><%=newusers.email%></h4>
-              <img src="/images/defaultdp.jpg" alt="Avatar" style="width:50%"><br><br>
-              <div class="panel panel-danger">
-                <div class="panel-heading">
-                  <span class="alertforaccess"><%=newusers.fullname%></span>
-                  <div class="w3-row w3-opacity">
-                  <div class="w3-half">
-                    <button class="w3-btn w3-green w3-btn-block w3-section updateStatus" data-id="<%=newusers._id%>" title="Accept"><i class="fa fa-check"></i></button>
-                  </div>
-                  <div class="w3-half">
-                    <button class="w3-btn w3-red w3-btn-block w3-section declineAccessRequest" data-id="<%=newusers._id%>" title="Decline"><i class="fa fa-remove"></i></button>
-                  </div>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      <br>
-      </div>
-      <%})%>            
+      <br>            
     <!-- End Right Column -->
     </div>

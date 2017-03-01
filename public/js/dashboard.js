@@ -236,6 +236,34 @@ $(document).on("click",".removethis",function() {
   }            
 });
 
+$(document).on("click",".deleteUser",function() {
+  var r = confirm("Are you sure you want to delete this USER?");
+  if (r == true) {
+  var id = $(this).data("id");
+  $("#panel-"+id).addClass("animated bounceOut"); 
+  $("#panel-"+id).fadeOut(1300);
+  $.post( "/deleteUser", { id: id})
+    .done(function(searchresult) {
+  });
+  } else {
+    txt = "You pressed Cancel!";
+  }            
+});
+
+$(document).on("click",".abortUser",function() {
+  var r = confirm("Are you sure you want to abort this USER access?");
+  if (r == true) {
+  var id = $(this).data("id");
+  $("#panel-"+id).addClass("animated rotateOut"); 
+  $("#panel-"+id).fadeOut(1100);
+  $.post( "/abortUser", { id: id})
+    .done(function(searchresult) {
+  });
+  } else {
+    txt = "You pressed Cancel!";
+  }            
+});
+
 $(document).on("click",".bookmarkthisportfolio",function() {
   var url = $(this).attr("id");
   $(".bookmarkthisportfolio").html("<img src='images/buttonloader.gif' width='22' height='22'> SAVING...");
@@ -264,6 +292,8 @@ $(document).on("keyup",".updateComment",function() {
 });
 
 $(document).on("click",".deleteportfoliobookmark",function() {
+  var r = confirm("Are you sure you want to delete this bookmark?");
+  if (r == true) {
   var id = $(this).attr("id");
   $("#show_"+id).addClass("animated hinge");
    $.post( "/deleteportfoliobookmark", { id: id})
@@ -271,7 +301,10 @@ $(document).on("click",".deleteportfoliobookmark",function() {
       setTimeout(function(){ 
         $("#show_"+id).hide();
       }, 2000);
-  });        
+  });
+  }else{
+
+  }        
 });
 
 $(document).on("keyup",".updatePhone",function() {
@@ -361,8 +394,8 @@ $(document).on("click",".bulk-other-button",function() {
 $("#modaldivLabel").html("Include portfolio sites in bulk.");
   
   $(".modalbutton").click();
-  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a list of sites, one per line. For including LinkedIn sites, select <b>Include sites in bulk (LinkedIn)</b> option from menu dropdown.<br><br><apan class="alert">NO LINKEDIN URL</span></div><div class="col-md-6">'+
-    '<textarea class="bulk-other-input" placeholder="INCLUDE PORTFOLIO URLS IN BULK"></textarea></div></div>');
+  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a list of sites, one per line. <hr><div class="alert">Please note: Do not include LinkedIn Sites. LinkedIn does not allow to parse linkedin public profiles.</div> <hr><div class="green"><b><center>ALTERNATE OPTION:</center></b> Please upload LinkedIn profile in PDF format from menu.</div> <hr></div><div class="col-md-6">'+
+    '<textarea class="bulk-other-input textarea1" placeholder="INCLUDE PORTFOLIO URLS IN BULK"></textarea></div></div>');
   $(".modal-footer").html('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
     '<button type="button" class="btn btn-primary" id="post-other-bulk-button">INCLUDE URLS IN BULK</button>');
 });
@@ -371,7 +404,7 @@ $("#modaldivLabel").html("Include portfolio sites in bulk.");
 $(document).on("click",".bulk-pdf-button",function() {
 $("#modaldivLabel").html("Upload portfolio in PDF format");
   $(".modalbutton").click();
-  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3>This section is basically to upload resumes or portfolios in PDF format. User can upload one or multiple PDF files to our server.</div><div class="col-md-6">'+
+  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3>This section is basically to upload resumes or portfolios in PDF format. User can upload multiple PDF files to our server.<hr><div class="alert">Note: Select 2 - 100 PDF files.</div></div><div class="col-md-6">'+
           '<form action="savepdfs" method="post" enctype="multipart/form-data">'+
             '<input type="file" name="file" accept="application/pdf" id="100portfolio" required="true" multiple><br><br>'+
             '<input type="submit"  style="display: none;" id="submit-pdf-button" value="submit">'+
@@ -411,7 +444,7 @@ $(document).on("click","#save_one_linkedin_url_button",function() { $("#save_one
 $(document).on("click",".onebyoneother",function() {
 $("#modaldivLabel").html("Save portfolio link individually.");
   $(".modalbutton").click();
-$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a site of portfolio. For including LinkedIn site, select <b>(Include LinkedIn URL)</b> option from menu dropdown.<br><br><span class="alert"> No LinkedIn sites are allowed.</span></div><div class="col-md-6">'+
+$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a site of portfolio. LinkedIn sites does not work. For including LinkedIn portfolios, <b>(Include LinkedIn profile pdf)</b> from menu dropdown.<br><br><span class="alert"> No LinkedIn sites are allowed.</span></div><div class="col-md-6">'+
         '<div>'+
           '<form action="saveurlindividually" method="post">'+
             '<input type="text" name="url" class="indiurl input" placeholder="Enter URL" required="true"><br>'+
@@ -444,7 +477,7 @@ $(document).on("click","#save_one_pdf_button",function() { $("#save_one_pdf_subm
 $(document).on("click",".textupload",function() {
 $("#modaldivLabel").html("Upload text.");
 $(".modalbutton").click();
-$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> This section is basically to upload resumes or portfolios in PDF format. User can upload one or multiple PDF files to our server.<br><br><span class="alert"> Only PDF format are allowed.</span></div><div class="col-md-6">'+
+$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> This section is basically to upload portfolios text manually. </div><div class="col-md-6">'+
         '<div>'+
           '<form action="saveSiteText" method="post">'+
             '<input type="text" name="url" class="input" placeholder="Enter URL" required="true"><br>'+

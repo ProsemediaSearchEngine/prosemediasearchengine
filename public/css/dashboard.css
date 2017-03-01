@@ -20,6 +20,8 @@ white-space: nowrap;
   text-align:right;
   padding-bottom: 20px;
 }
+.green{color: green; background-color: #e5f2e5; padding: 2%; border-radius: 6px;}
+.red{color: red; background-color: #ffe5e5; padding: 2%; border-radius: 6px;}
 .scrollable{overflow:scroll; max-height:400px; text-align: left}
 .close{margin-top: -60px; color: red; font-size: 3em;}
 #searchload{text-align: center;}
