@@ -8,7 +8,7 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append('<div><input type="text" placeholder="Enter Email" class="sendresultinemails"/><span class="remove_field errmsg"><i class="fa fa-remove" aria-hidden="true"></i></span></div><br>'); 
+            $(wrapper).append('<div><input type="text" placeholder="Enter Email" class="sendresultinemails"/><span class="remove_field errmsg"><i class="fa fa-remove" aria-hidden="true"></i></span></div>'); 
         }
     });
     

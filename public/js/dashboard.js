@@ -179,13 +179,31 @@ $(document).on("click","#sendemailbutton",function() {
   var keyword = $("#bookmarkeyword").val();
   $('.sendresultinemails').each(function(){
      var email = $(this).val();
-    $.post( "/sendresultinemails", { key: keyword, links: links, email: email})
-      .done(function(data) {
-    });
+    if(validateEmail(email)){
+    $(this).next().hide();
+    $(this).remove();
+      $.post( "/sendresultinemails", { key: keyword, links: links, email: email})
+        .done(function(email) {
+          var msg = "The result email was successfully created and sent to "+email;
+          $("#appendemailmsg").append('<div class="panel panel-success animated lightSpeedIn"><div class="panel-heading">'+msg+'</div></div>')
+      });
+    }
   })
-  
            
 });
+
+function validateEmail(email) {
+    var x = email;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length) {
+        var msg = "Invalid email: "+email;
+        $("#appendemailmsg").append('<div class="panel panel-danger animated tada"><div class="panel-heading">'+msg+'</div></div>')
+        return false;
+    }else{
+      return true;
+    }
+}
 
 $(document).on("click",".deletethisportfolio",function() {
   var r = confirm("Are you sure you want to delete this URL?");
@@ -333,7 +351,7 @@ $(document).on("click",".viewallurl",function() {
 $(document).on("click",".bulk-linkedin-button",function() {
 $("#modaldivLabel").html("Include linkedin portfolio sites in bulk.");
   $(".modalbutton").click();
-  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a list of LinkedIn profiles, one per line. For including other sites, select <b>Include sites in bulk (OTHER)</b> option from menu dropdown.<br><br><span class="alert">Only LinkedIn sites are allowed.</span></div><div class="col-md-6">'+
+  $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a list of LinkedIn profiles, one per line. For including other sites, select <b>Include sites in bulk (OTHER)</b> option from menu dropdown.<br><br><span class="alert">Linkedin Blocked this functionality.</span></div><div class="col-md-6">'+
     '<textarea class="bulk-linkedin-input" placeholder="INCLUDE LINKED-IN URLS IN BULK"></textarea></div></div>');
   $(".modal-footer").html('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
     '<button type="button" class="btn btn-primary" id="post-linkedin-bulk-button">INCLUDE URLS IN BULK</button>');
@@ -422,3 +440,19 @@ $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Th
     '<button type="button" class="btn btn-primary" id="save_one_pdf_button">SAVE PORTFOLIOS</button>');});
 
 $(document).on("click","#save_one_pdf_button",function() { $("#save_one_pdf_submit").click();});
+
+$(document).on("click",".textupload",function() {
+$("#modaldivLabel").html("Upload text.");
+$(".modalbutton").click();
+$(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> This section is basically to upload resumes or portfolios in PDF format. User can upload one or multiple PDF files to our server.<br><br><span class="alert"> Only PDF format are allowed.</span></div><div class="col-md-6">'+
+        '<div>'+
+          '<form action="saveSiteText" method="post">'+
+            '<input type="text" name="url" class="input" placeholder="Enter URL" required="true"><br>'+
+            '<textarea name="text" placeholder="INCLUDE SITE TEXT" class="textarea1" required="true"></textarea>'+
+            '<input type="submit" style="display: none;" id="save_text" value="submit">'+
+          '</form>'+
+        '</div></div></div>');
+    $(".modal-footer").html('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
+    '<button type="button" class="btn btn-primary" id="save_text_button">SAVE TEXT</button>');});
+
+$(document).on("click","#save_text_button",function() { $("#save_text").click();});

@@ -48,28 +48,42 @@
             <p class="w3-tag w3-small w3-theme bookmakshow" style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></p><br>
           <%})%>          
           </div>
-          <button onclick="myFunction('Demo3')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
+          <button onclick="myFunction('Demo3')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> All platform Users</button>
           <div id="Demo3" class="w3-accordion-content w3-container">
          <div class="w3-row-padding">
          <br>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/images/prose.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
+          <% allusers.forEach(function(allusers){%>
+            <div class="w3-full">
+            <div class="panel panel-default">
+              <div class="panel-heading">User name: <%=allusers.fullname%></div>
+              <div class="panel-body">
+              Email: <%=allusers.email%><br>
+              Account type: 
+              <% if(allusers.superadmin==true){%>
+                Super admin,
+              <%}%>
+              <% if(allusers.admin==true){%>
+                Admin,
+              <%}%>
+              <% if(allusers.admin==false){%>
+                Normal User
+              <%}%>
+              <br>
+                <% if(currentuser.superadmin==true && allusers.email!=currentuser.email && allusers.superadmin==false){%>
+                    <a href="#">Delete this User</a>
+                    <a href="#">Abort platform access</a>
+                 <!--  <% if(allusers.admin==false){%>
+                    <a href="#">Give Admin access</a>
+                  <%}else{%>
+                      <a href="#">Remove admin access</a>
+                  <%}%> -->
+               <%}%>
+              </div>
+            </div>
+               
+               <hr>
+            </div>
+          <%})%>
          </div>
           </div>
         </div>      

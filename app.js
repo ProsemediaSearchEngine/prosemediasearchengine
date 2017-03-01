@@ -7,7 +7,7 @@ var mongodb = require('mongodb');
 var scraperjs = require('scraperjs');
 // mongodb://<dbuser>:<dbpassword>@ds153609.mlab.com:53609/sonali
 var collections = ["users", "urldata", "bookmark", "bookmarkportfolio"]
-var db = mongojs('mongodb://prosemedia:prosemedia@ds27145.mlab.com:27145/prosemedia', collections)
+var db = mongojs('mongodb://prosemedia:prosemedia@ds027145.mlab.com:27145/prosemedia', collections)
 var app = express();
 var ObjectId = mongojs.ObjectId;
 var session = require('client-sessions');
@@ -26,17 +26,23 @@ var smtpTransport = require("nodemailer-smtp-transport");
 // smtp.sendgrid.net
 // smtp.gmail.com
 var smtpTransport = nodemailer.createTransport(smtpTransport({
-    host : "smtp.gmail.com",
+    host : "smtp.sendgrid.net",
     secureConnection : false,
     port: 587,
-    auth : {user : "prosemedia.se@gmail.com", pass : "prosemedia12"}
+    auth : {user : "apikey", pass : "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"}
 }));
+
 function sendEmail(email, subject, title, message){
   var emailBody = '<html><body style="padding:40px;"><header style="background-color: #2196F3; padding: 10px !important; margin:0px !important;"><h1 style="color: #E3F2FD; text-align:center">Prosemedia Search Result</h1></header><div><div style="padding: 3%;"><br><h1>[TITLE]</h1><br>[MESSAGE]<br><br><br>Best, Prosemedia team,<br><br><br><br></div><footer style="background-color: #2196F3; padding: 3px !important; margin:0px !important;color: #E3F2FD; text-align: center; padding: 2%;">&#169; 2017 prosemedia(dot)com. All Rights Reserved.</footer></body></html>';
   emailBody = emailBody.replace("[TITLE]", title);
   emailBody = emailBody.replace("[MESSAGE]", "Hello "+email+"<br><br> "+message+"");
   var mailOptions={from : "prosemedia.se@gmail.com", to : email, subject : subject,  text : "Your Text", html : emailBody, }
       smtpTransport.sendMail(mailOptions, function(error, response){ 
+        if(error){
+          console.log(error);
+        }else{
+          console.log(response);
+        }
       });
 }
 
@@ -124,6 +130,55 @@ app.get('/index', function(req, res){
   }   
 });
 
+app.post('/request', function(req, res){ 
+  var fullname = req.body.fullname;
+  var email = req.body.email;
+  var password = req.body.password;
+  var newUser = {fullname: fullname, email: email, password: password, photo: "images/defaultdp.jpg", status: false, admin: false, superadmin: false}
+  db.users.findOne({ email: email }, function(err, users) {
+    if (!users) {
+      db.users.insert(newUser, function(err, newUser){
+        res.render("login.ejs",{message: "Please wait for Justin to approve"});
+      });
+    }else{
+      if(users.status === false) message = "You are registered but not approved by the Admin.";
+      else message = "You are registered. Try login.";
+      res.render("login.ejs",{message: message});
+    }
+  });
+});
+
+app.post('/login', function(req, res){
+  db.users.findOne({ email: req.body.email }, function(err, users) {
+    if (!users) {
+      req.session.reset();
+      message = 'Seems like you are new user. Please request access and wait for admin to approve the request.'; 
+      res.render("login.ejs", {message: message});
+    } else {
+      if (req.body.password === users.password && users.status === true) {
+        res.locals.users = users;
+        req.session.users = users;
+        req.session.users.loadmessage = "WELCOME "+users.fullname.toUpperCase();
+        console.log(req.session.users.email)
+        res.redirect("/dashboard");
+      } else {
+        if (users.status === false) {
+          message = 'You are registered but admin access unavailable. Contact admin for more information...';
+          res.render("login.ejs", {message: message});
+        }else{
+          message = 'Incorrect Login...';
+          res.render("login.ejs", {message: message});
+        }
+      }
+    }
+  });     
+});
+
+app.post('/reset', function(req, res){      
+  res.render("login.ejs", {message: "Reset Password"});
+});
+
+
 app.get('/dashboard', requireLogin, function(req, res){
   var ObjectID = require('mongodb').ObjectID;
   var o_id = req.session.users._id;
@@ -133,7 +188,9 @@ app.get('/dashboard', requireLogin, function(req, res){
       db.bookmark.find({'userid': o_id},function (err, bookmark) {
         db.bookmarkportfolio.find({'userid': o_id},function (err, bookmarkportfolio) {
           db.users.find({status: false}, function(err, newusers) {
-            res.render("dashboard.ejs", {currentuser: req.session.users, urldata: urldata, newusers: newusers, bookmark: bookmark, bookmarkportfolio: bookmarkportfolio, bug: bug});
+            db.users.find({}).skip(0).sort({_id: -1}).toArray(function (err, allusers) {
+              res.render("dashboard.ejs", {allusers:allusers, currentuser: req.session.users, urldata: urldata, newusers: newusers, bookmark: bookmark, bookmarkportfolio: bookmarkportfolio, bug: bug});
+            });
           });
         });
       });
@@ -153,7 +210,7 @@ app.post('/sendresultinemails', function(req, res){
   var keyword = req.body.key;
   console.log(email+keyword);
   sendEmail(email, "Protfolios with " + keyword+ " keyword", "Protfolios with " + keyword+ " keyword", "We found below URLS with "+keyword+" keywords. <br>"+message);
-  res.send("emailsend");
+  res.send(email);
 });
 
 var returnurl = "Hello";
@@ -219,53 +276,6 @@ app.post('/declineAccessRequest', function(req, res){
   res.send("Updated");
 });
 
-app.post('/request', function(req, res){ 
-  var fullname = req.body.fullname;
-  var email = req.body.email;
-  var password = req.body.password;
-  var newUser = {fullname: fullname, email: email, password: password, photo: "images/defaultdp.jpg", status: false, admin: false}
-  db.users.findOne({ email: email }, function(err, users) {
-    if (!users) {  
-      db.users.insert(newUser, function(err, newUser){
-        res.render("login.ejs",{message: "Please wait for Justin to approve"});
-      });
-    }else{
-      if(users.status === false) message = "You are registered but not approved by the Admin.";
-      else message = "You are registered. Try login.";
-      res.render("login.ejs",{message: message});
-    }
-  });
-});
-
-app.post('/login', function(req, res){
-  db.users.findOne({ email: req.body.email }, function(err, users) {
-    if (!users) {
-      req.session.reset();
-      message = 'Seems like you are new user. Please request access and wait for admin to approve the request.'; 
-      res.render("login.ejs", {message: message});
-    } else {
-      if (req.body.password === users.password && users.status === true) {
-        res.locals.users = users;
-        req.session.users = users;
-        req.session.users.loadmessage = "WELCOME "+users.fullname.toUpperCase();
-        console.log(req.session.users.email)
-        res.redirect("/dashboard");
-      } else {
-        if (users.status === false) {
-          message = 'You are registered but admin access unavailable. Contact admin for more information...';
-          res.render("login.ejs", {message: message});
-        }else{
-          message = 'Incorrect Login...';
-          res.render("login.ejs", {message: message});
-        }
-      }
-    }
-  });     
-});
-
-app.post('/reset', function(req, res){      
-  res.render("login.ejs", {message: "Reset Password"});
-});
 
 app.post('/saveOtherBulkSite', function(req, res){       
   var dataoflink = "";
@@ -589,6 +599,17 @@ app.post('/saveurlindividually', function(req, res){
   var url = req.body.url;
   var name = req.session.users.fullname;
   saveOtherBulkSite(url, name);
+  res.redirect("/");
+});
+
+app.post('/saveSiteText', function(req, res){       
+  var url = req.body.url;
+  var text = req.body.text;
+  var name = req.session.users.fullname;
+  var newData = {postedby: name,url: url, title: "Manually defined", body: text, email: "Update...", phone: "Update...", comment: "No comments yet", stars: 0}
+  console.log(url);
+  db.urldata.insert(newData);
+  req.session.users.loadmessage = "Recent activity: Portfolio text saved."
   res.redirect("/");
 });
 

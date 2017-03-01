@@ -67,9 +67,23 @@ input[type="file"]{
    cursor:pointer;
 }
 .textarea{
-     position: relative;
+    position: relative;
    font-family: calibri;
    width: 100%;
+   padding: 10px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border: 1px dashed #BBB; 
+   text-align: center;
+   cursor:pointer;
+}
+.textarea1{
+   position: relative;
+   font-family: calibri;
+   max-width: 100%;
+   min-width: 100%;
+   min-height: 50%;
+   max-height: 500%;
    padding: 10px;
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
