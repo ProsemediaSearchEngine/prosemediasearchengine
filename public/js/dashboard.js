@@ -52,15 +52,30 @@ $(document).on("click","#post-other-bulk-button",function() {
   var bulkurl = $(".bulk-other-input").val();
   bulkurl = bulkurl.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
   var res = bulkurl.split(" ");
+  $("#post-other-bulk-loader").html("<center><img src='images/search.gif' width='150' height='150'><hr><div id='myProgress'><div id='myBar'>0%</div></div>Please wait while we are scrapping your sites. It should take exact one minute.</center>");
+  move();
   if(bulkurl==='' || bulkurl===null || res.length===1){alert("PLEASE INCLUDE MORE THAN ONE URLS")}
   else{
      $.post( "/saveOtherBulkSite", { bulkurl: bulkurl})
       .done(function(result){
-      alert(result)    
+        setTimeout(function(){ $("#post-other-bulk-loader").html("<center><img src='images/done2.jpg' width='150' height='150'><hr><div class='panel panel-success animated lightSpeedIn'><div class='panel-heading'>Scrapping portfolios successfully done.</div></div></center>"); }, 60000); 
     });
   }
 });
-
+function move() {
+  var elem = document.getElementById("myBar");   
+  var width = 0;
+  var id = setInterval(frame, 600);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++; 
+      elem.style.width = width + '%'; 
+      elem.innerHTML = width * 1  + '%';
+    }
+  }
+}
 $(document).on("click",".profileimagelinktag",function() {
   $(".profileimagefiletag").click();
 });
@@ -395,7 +410,7 @@ $("#modaldivLabel").html("Include portfolio sites in bulk.");
   
   $(".modalbutton").click();
   $(".modal-body").html('<div class="row"><div class="col-md-6"><h3>GUIDE:</h3> Enter a list of sites, one per line. <hr><div class="alert">Please note: Do not include LinkedIn Sites. LinkedIn does not allow to parse linkedin public profiles.</div> <hr><div class="green"><b><center>ALTERNATE OPTION:</center></b> Please upload LinkedIn profile in PDF format from menu.</div> <hr></div><div class="col-md-6">'+
-    '<textarea class="bulk-other-input textarea1" placeholder="INCLUDE PORTFOLIO URLS IN BULK"></textarea></div></div>');
+    '<div id="post-other-bulk-loader"><textarea class="bulk-other-input textarea1" placeholder="INCLUDE PORTFOLIO URLS IN BULK"></textarea></div></div></div>');
   $(".modal-footer").html('<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>'+
     '<button type="button" class="btn btn-primary" id="post-other-bulk-button">INCLUDE URLS IN BULK</button>');
 });
