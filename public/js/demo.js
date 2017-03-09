@@ -26,11 +26,23 @@ $( document ).ready(function() {
 	$(".add_new_demo_div").hide();
 	$(".update_demo_div").hide();
 	$( ".add_new_demo_button" ).click(function() {
-	  	$(".add_new_demo_div").toggle("slow");
+		var txt;
+		var r = prompt("Please enter admin password", "");
+		if (r == "prose12") {
+			$(".add_new_demo_div").toggle("slow");
+		} else {
+			alert("Invalid password")			
+		}
 	});
 
 	$( ".update_demo_btn" ).click(function() {
 		var id = $(this).data("id");
-	  	$("#hidden_"+id).toggle("slow");
+	  	var txt;
+		var r = prompt("Please enter admin password", "");
+		if (r == "prose12") {
+			$("#hidden_"+id).toggle("slow");
+			} else {
+			alert("Invalid password")			
+		}
 	});
 });
