@@ -250,7 +250,7 @@ app.post('/sendresultinemails', function(req, res){
 var returnurl = "Hello";
 
 app.post('/search', function(req, res){
-  var key = req.body.keyword;
+  var key = " "+req.body.keyword+" ";
   var result = "";
   db.urldata.find({ body: {'$regex': key, '$options' : 'i'} }, function (err, documents) {
     res.send(documents);
