@@ -16,7 +16,7 @@ white-space: nowrap;
   min-width: 170px;
 }
 .dataTables_wrapper .dt-buttons {
-  float:none;  
+  float:none;
   text-align:right;
   padding-bottom: 20px;
 }
@@ -51,7 +51,7 @@ input[type="file"]{
    padding: 10px;
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
-   border: 1px dashed #BBB; 
+   border: 1px dashed #BBB;
    text-align: center;
    background-color: #DDD;
    cursor:pointer;
@@ -64,7 +64,7 @@ input[type="file"]{
    padding: 10px;
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
-   border: 1px dashed #BBB; 
+   border: 1px dashed #BBB;
    text-align: center;
    cursor:pointer;
 }
@@ -75,7 +75,7 @@ input[type="file"]{
    padding: 10px;
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
-   border: 1px dashed #BBB; 
+   border: 1px dashed #BBB;
    text-align: center;
    cursor:pointer;
 }
@@ -89,11 +89,11 @@ input[type="file"]{
    padding: 10px;
    -webkit-border-radius: 5px;
    -moz-border-radius: 5px;
-   border: 1px dashed #BBB; 
+   border: 1px dashed #BBB;
    text-align: center;
    cursor:pointer;
 }
-.previewlink{cursor: pointer;}
+.preview_link,.previewlink{cursor: pointer;}
 th {
     background-color: #2196F3;
     color: white; max-height: 10%;
@@ -253,7 +253,7 @@ font-weight: bold;
     transform: rotate(-45deg);
 }
 .search-wrapper .input-holder .search-icon span::before, .search-wrapper .input-holder .search-icon span::after {
-    position: absolute; 
+    position: absolute;
     content:'';
 }
 .search-wrapper .input-holder .search-icon span::before {
@@ -309,7 +309,7 @@ font-weight: bold;
     top: 10px;
 }
 .UN_SOLVED{
-  
+
 }
 #myProgress {
   width: 100%;
