@@ -61,7 +61,7 @@ $(document).on("click", "#post-other-bulk-button", function () {
   else {
     $.post("/saveOtherBulkSite", { bulkurl: bulkurl })
       .done(function (result) {
-        setTimeout(function () { $("#post-other-bulk-loader").html("<center><img src='images/done2.jpg' width='150' height='150'><hr><div class='panel panel-success animated lightSpeedIn'><div class='panel-heading'>Scrapping portfolios successfully done.</div></div></center>"); }, 60000);
+        $("#post-other-bulk-loader").html("<center><img src='images/done2.jpg' width='150' height='150'><hr><div class='panel panel-success animated lightSpeedIn'><div class='panel-heading'>Scrapping portfolios successfully done.</div></div></center>");
       });
   }
 });
@@ -118,6 +118,13 @@ $(document).on("click", "#post-linkedin-bulk-button", function () {
 $(document).ready(function () {
   $("#linkindi").hide();
 
+  // Trigger submit when "enter" key is pressed on input.
+  $('.searchinputfield').on('keyup', function (e) {
+    if (e.keyCode === 13) {
+      $('.searchsubmit').trigger('click');
+    }
+  });
+
   // Search submit click handler.
   $(".searchsubmit").on("click", function () {
     var keyword = $(".searchinputfield").val();
@@ -128,50 +135,46 @@ $(document).ready(function () {
     // Displays all links with content matching the searched keyword(s).
     $.post("/search", { keyword: keyword })
       .done(function (searchresult) {
-        setTimeout(function () {
-          $('html, body').animate({
-            scrollTop: $(".searchresultpannel").offset().top
-          }, 100);
-          $(".searchresultpannel").addClass("animated tada");
-          setTimeout(function () {
-            $(".searchresultpannel").removeClass("animated tada");
-          }, 100);
+        $('html, body').animate({
+          scrollTop: $(".searchresultpannel").offset().top
+        }, 100);
+        $(".searchresultpannel").addClass("animated tada");
+        $(".searchresultpannel").removeClass("animated tada");
 
-          var r = "";
-          var r2 = "";
-          if (searchresult.length > 0) {
-            r += '<tr>';
-            r += '<th>URL</th>';
-            r += '<th>Teaser</th>';
-            r += '</tr>';
-          }
+        var r = "";
+        var r2 = "";
+        if (searchresult.length > 0) {
+          r += '<tr>';
+          r += '<th>URL</th>';
+          r += '<th>Teaser</th>';
+          r += '</tr>';
+        }
 
-          for (i = 0; i < searchresult.length; i++) {
-            var url = searchresult[i].url;
-            r += '<tr>';
-            // The URL link.
-            r = r + " " + '<td class="w3-small linkfromsearch"><a class="previewlink">' + url + '</a></td>';
-            r2 = r2 + "<br><br>" + url;
+        for (i = 0; i < searchresult.length; i++) {
+          var url = searchresult[i].url;
+          r += '<tr>';
+          // The URL link.
+          r = r + " " + '<td class="w3-small linkfromsearch"><a class="previewlink">' + url + '</a></td>';
+          r2 = r2 + "<br><br>" + url;
 
-            // The teaser.
-            r += '<td class="preview_link_teaser">';
-            r += '<a class="preview_link w3-small">Preview</a>';
-            r += '</td>';
-            r += '</tr>';
-          }
-          $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
-            "<h2>" + (searchresult.length === 1 ? searchresult.length + " RESULT" : searchresult.length + " RESULTS") + " FOR <strong class='keywordsearch'> " + keyword.toUpperCase() + "</strong> KEYWORD</h2>");
-          if (searchresult.length === 0) {
-            $("#bookmarkandsendemail").addClass("disableclick");
-            r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
-          } else {
-            $("#bookmarkandsendemail").removeClass("disableclick");
-          }
-          $("#searchresult").html(r);
-          $("#bookmarkeyword").val(keyword);
-          $("#emailresult").val(r2);
-          $("#bookmarklink").attr("href", "savebookmark/" + keyword)
-        }, 2000);
+          // The teaser.
+          r += '<td class="preview_link_teaser">';
+          r += '<a class="preview_link w3-small">Preview</a>';
+          r += '</td>';
+          r += '</tr>';
+        }
+        $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
+          "<h2>" + (searchresult.length === 1 ? searchresult.length + " RESULT" : searchresult.length + " RESULTS") + " FOR <strong class='keywordsearch'> " + keyword.toUpperCase());
+        if (searchresult.length === 0) {
+          $("#bookmarkandsendemail").addClass("disableclick");
+          r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
+        } else {
+          $("#bookmarkandsendemail").removeClass("disableclick");
+        }
+        $("#searchresult").html(r);
+        $("#bookmarkeyword").val(keyword);
+        $("#emailresult").val(r2);
+        $("#bookmarklink").attr("href", "savebookmark/" + keyword);
       });
   });
 
@@ -194,32 +197,29 @@ $(document).ready(function () {
       "<img src='images/load2.gif' width='150' height='150'>");
     $.post("/search", { keyword: keyword })
       .done(function (searchresult) {
-        setTimeout(function () {
-          $('html, body').animate({
-            scrollTop: $(".searchresultpannel").offset().top
-          }, 500);
-          $(".searchresultpannel").addClass("animated tada");
-          setTimeout(function () {
-            $(".searchresultpannel").removeClass("animated tada");
-          }, 2000);
-          var r = "<br>";
-          var r2 = "";
-          for (i = 0; i < searchresult.length; i++) {
-            r = r + " " + '<span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a class="previewlink">' + searchresult[i].url + '</a></span>';
-            r2 = r2 + "<br><br>" + searchresult[i].url;
-          }
-          $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
-            "<h2>" + searchresult.length + " RESULT FOR <b class='keywordsearch'> " + keyword.toUpperCase() + " </b> KEYWORD</h2>");
-          if (searchresult.length === 0) {
-            $("#bookmarkandsendemail").addClass("disableclick");
-            r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
-          } else {
-            $("#bookmarkandsendemail").removeClass("disableclick");
-          } $("#searchresult").html(r);
-          $("#bookmarkeyword").val(keyword);
-          $("#emailresult").val(r2);
-          $("#bookmarklink").attr("href", "savebookmark/" + keyword);
-        }, 2000);
+        $('html, body').animate({
+          scrollTop: $(".searchresultpannel").offset().top
+        }, 500);
+        $(".searchresultpannel").addClass("animated tada");
+        $(".searchresultpannel").removeClass("animated tada");
+        var r = "<br>";
+        var r2 = "";
+        for (i = 0; i < searchresult.length; i++) {
+          r = r + " " + '<span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a class="previewlink">' + searchresult[i].url + '</a></span>';
+          r2 = r2 + "<br><br>" + searchresult[i].url;
+        }
+        $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
+          "<h2>" + searchresult.length + " RESULT FOR <b class='keywordsearch'> " + keyword.toUpperCase() + " </b> KEYWORD</h2>");
+        if (searchresult.length === 0) {
+          $("#bookmarkandsendemail").addClass("disableclick");
+          r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
+        } else {
+          $("#bookmarkandsendemail").removeClass("disableclick");
+        } $("#searchresult").html(r);
+        $("#bookmarkeyword").val(keyword);
+        $("#emailresult").val(r2);
+        $("#bookmarklink").attr("href", "savebookmark/" + keyword);
+        // }, 2000);
       });
   });
 });
@@ -319,9 +319,7 @@ $(document).on("click", ".bookmarkthisportfolio", function () {
   $(".bookmarkthisportfolio").html("<img src='images/buttonloader.gif' width='22' height='22'> SAVING...");
   $.post("/bookmarkthisportfolio", { url: url })
     .done(function (searchresult) {
-      setTimeout(function () {
-        $(".bookmarkthisportfolio").html("BOOKMARK SUCCESSFULL");
-      }, 1000);
+      $(".bookmarkthisportfolio").html("BOOKMARK SUCCESSFULL");
     });
 });
 
@@ -348,9 +346,7 @@ $(document).on("click", ".deleteportfoliobookmark", function () {
     $("#show_" + id).addClass("animated hinge");
     $.post("/deleteportfoliobookmark", { id: id })
       .done(function (updatecomment) {
-        setTimeout(function () {
-          $("#show_" + id).hide();
-        }, 2000);
+        $("#show_" + id).hide();
       });
   } else {
 
@@ -376,9 +372,7 @@ $(document).on("keyup", ".updateEmail", function () {
 $(document).on("click", ".updateStatus", function () {
   var id = $(this).data("id");
   $(".pendinguser_" + id).addClass("animated fadeOutRight");
-  setTimeout(function () {
-    $("#pendinguser_" + id).hide();
-  }, 1000);
+  $("#pendinguser_" + id).hide();
   $.post("/updateStatus", { id: id })
     .done(function (updatecomment) {
     });
@@ -391,9 +385,7 @@ $(document).on("click", ".declineAccessRequest", function () {
   var r = confirm("Are you sure you want to deny this request??");
   if (r == true) {
     $(".pendinguser_" + id).addClass("animated fadeOutRight");
-    setTimeout(function () {
-      $(".pendinguser_" + id).hide();
-    }, 1000);
+    $(".pendinguser_" + id).hide();
     $.post("/declineAccessRequest", { id: id })
       .done(function (updatecomment) {
       });
@@ -415,12 +407,8 @@ $(document).on("click", ".viewallurl", function () {
   $('html, body').animate({
     scrollTop: $("#viewallsection").offset().top
   }, 500);
-  setTimeout(function () {
-    $("#viewallsection").addClass("animated tada");
-  }, 500);
-  setTimeout(function () {
-    $("#viewallsection").removeClass("animated tada");
-  }, 2000);
+  $("#viewallsection").addClass("animated tada");
+  $("#viewallsection").removeClass("animated tada");
 });
 
 
