@@ -176,7 +176,7 @@ $(document).ready(function () {
   });
 
   // Client handler for preview link.
-  $(document).on('click', '.preview_link', function() {
+  $(document).on('click', '.preview_link', function () {
     var link = $(this).closest('tr').find('.previewlink').html();
     $("#modaldivLabel").html("Portfolio Preview: " + '<span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a href="' + link + '" target="_blank">' + link + '</a></span>');
     $(".modalbutton").click();
