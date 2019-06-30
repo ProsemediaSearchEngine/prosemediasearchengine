@@ -20,6 +20,7 @@
     "client-sessions": "^0.7.0",
     "connect-ensure-login": "^0.1.1",
     "connect-multiparty": "^2.0.0",
+    "cors": "^2.8.5",
     "ejs": "^2.5.6",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
