@@ -153,7 +153,6 @@ $(document).ready(function () {
           r += '<tr>';
           r += '<th>URL</th>';
           r += '<th>Teaser</th>';
-          r += '<th>Preview</th>';
           r += '</tr>';
         }
 
@@ -161,11 +160,11 @@ $(document).ready(function () {
           var url = searchresult[i].url;
           r += '<tr>';
           // The URL link.
-          r = r + " " + '<td class="w3-small linkfromsearch"><a class="previewlink">' + url + '</a></td>';
+          r = r + " " + '<td class="w3-small linkfromsearch"><div class="previewlink_wrapper"><a class="previewlink">' + url + '</a></div><div>(<a class="preview_link w3-small">Preview</a>)</div></td>';
           r2 = r2 + "<br><br>" + url;
 
           // The teaser with highlighted keywords.
-          r += '<td class="highlighted_teaser">';
+          r += '<td class="w3-small highlighted_teaser">';
           var regex = new RegExp(keyword, "gi");
           var body = searchresult[i].body;
           var highlighted_text = body.split(/[.?!,]/).filter(function (n) {
@@ -180,9 +179,9 @@ $(document).ready(function () {
           r += '</td>';
 
           // The preview link.
-          r += '<td class="preview_link_teaser">';
-          r += '<a class="preview_link w3-small">Preview</a>';
-          r += '</td>';
+          // r += '<td class="preview_link_teaser">';
+          // r += '<a class="preview_link w3-small">Preview</a>';
+          // r += '</td>';
           r += '</tr>';
         }
         $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
