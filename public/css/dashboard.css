@@ -120,6 +120,10 @@ td {
 td:nth-child(7){text-align: center}
 td:nth-child(2){text-align: left}
 
+td.highlighted_teaser {
+  white-space: normal;
+}
+
 .removethis{color: red; font-size: 2em; cursor: pointer;}
 .selectEntry{
    width: 100px;
@@ -322,4 +326,11 @@ font-weight: bold;
   text-align: center;
   line-height: 30px;
   color: white;
+}
+
+.highlighted {
+  font-weight: bold;
+  color: #2196F3;
+  background: white;
+  padding: .1rem .3rem .2rem;
 }

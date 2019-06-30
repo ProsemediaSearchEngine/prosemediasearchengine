@@ -7,10 +7,13 @@ $(document).ready(function () {
   $("#searchloaderTable").html("<img src='images/search.gif' width='150' height='150'>");
 
   // Gets all matching data.
-  $.post("/allurldata")
-    .done(function (result) {
+  var all_url_data_page = 1;
+
+  $.post("/allurldata", { page: all_url_data_page })
+    .done(function (response) {
       $("#searchloaderTable").html("");
       var html = "";
+      var result = response.data;
       for (i = 0; i < result.length; i++) {
         html = html + '<tr>' +
           '<td>' + result[i].postedby + '</td>' +
@@ -43,7 +46,10 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('#allurl').DataTable({
-    responsive: true
+    responsive: true,
+    language: {
+      info: "Showing _START_ to _END_ of _TOTAL_ entries"
+    }
   });
   $(".dataTables_length select").addClass("selectEntry").attr("placeholder", "Filter search").append('<br><br><br><br>');
   $(".dataTables_filter input").addClass("searchInput").attr("placeholder", "Filter search");
@@ -147,6 +153,7 @@ $(document).ready(function () {
           r += '<tr>';
           r += '<th>URL</th>';
           r += '<th>Teaser</th>';
+          r += '<th>Preview</th>';
           r += '</tr>';
         }
 
@@ -157,7 +164,22 @@ $(document).ready(function () {
           r = r + " " + '<td class="w3-small linkfromsearch"><a class="previewlink">' + url + '</a></td>';
           r2 = r2 + "<br><br>" + url;
 
-          // The teaser.
+          // The teaser with highlighted keywords.
+          r += '<td class="highlighted_teaser">';
+          var regex = new RegExp(keyword, "gi");
+          var body = searchresult[i].body;
+          var highlighted_text = body.split(/[.?!,]/).filter(function (n) {
+            return regex.test(n);
+          });
+
+          for (var j = 0; j < highlighted_text.length; j++) {
+            highlighted_text[j] = highlighted_text[j].replace(regex, '<span class="highlighted">' + keyword + '</span>');
+          }
+
+          r += highlighted_text;
+          r += '</td>';
+
+          // The preview link.
           r += '<td class="preview_link_teaser">';
           r += '<a class="preview_link w3-small">Preview</a>';
           r += '</td>';
@@ -188,7 +210,7 @@ $(document).ready(function () {
       '<button type="button" class="btn btn-danger"><span class="deletethisportfolio" id="' + link + '"><i class="fa fa-remove" aria-hidden="true"></i> Remove Portfolio</span></button>' +
       '<button type="button" class="btn btn-warning"><span class="bookmarkthisportfolio" id="' + link + '"><i class="fa fa-bookmark" aria-hidden="true"></i> Bookmark Portfolio</span></button>' +
       '<button type="button" class="btn btn-primary modalbutton"><a href="' + link + '" target="_blank">Read More </a></button>');
-  })
+  });
 
   $(".bookmakshow").on("click", function () {
     var keyword = $(this).text();
