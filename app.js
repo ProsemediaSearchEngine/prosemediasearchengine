@@ -201,7 +201,6 @@ app.post('/login', cors(), function (req, res, next) {
         res.locals.users = users;
         req.session.users = users;
         req.session.users.loadmessage = "WELCOME " + users.fullname.toUpperCase();
-        console.log(req.session.users.email)
         res.redirect("/dashboard");
       } else {
         if (users.status === false) {
@@ -222,9 +221,6 @@ app.post('/reset', cors(), function (req, res, next) {
 
 app.use(cors({ origin: '*' }));
 app.get('/dashboard', cors(), function (req, res, next) {
-  console.log("In dashboard!");
-  // console.log(res);
-  console.log(req.headers);
   var ObjectID = require('mongodb').ObjectID;
   var o_id = req.session.users._id;
   // db.urldata.find({}).skip(0).sort({_id: -1}).limit(1).toArray(function (err, urldata) {
@@ -269,7 +265,6 @@ app.post('/sendresultinemails', cors(), function (req, res, next) {
   var message = req.body.links;
   var email = req.body.email;
   var keyword = req.body.key;
-  console.log(email + keyword);
   sendEmail(email, "Protfolios with " + keyword + " keyword", "Protfolios with " + keyword + " keyword", "We found below URLS with " + keyword + " keywords. <br>" + message);
   res.send(email);
 });
@@ -287,7 +282,6 @@ app.post('/removeurl', cors(), function (req, res, next) {
   var ObjectID = require('mongodb').ObjectID;
   var o_id = new ObjectID(id);
   db.urldata.remove({ '_id': o_id }, function (err, url) {
-    console.log("Deleted" + url)
     res.send("Deleted");
   });
 });
@@ -394,7 +388,6 @@ function saveOtherBulkSite(url, name) {
       var email = extractEmails(data); if (email === null || email === "") email = "Update..";
       var phone = extractPhone(data); if (phone === null || phone === "") phone = "Update..";
       var newData = { postedby: name, url: url, title: title, body: data, email: email, phone: phone, comment: "No comments yet", stars: 0 }
-      console.log(url);
       db.urldata.insert(newData);
     }
   });
@@ -455,7 +448,6 @@ function pdfparser(name, path, portfoliourl, originalFilename, timestamp) {
   pdfParser.on("pdfParser_dataReady", pdfData => {
     var data = pdfParser.getRawTextContent();
     var extracturls = data.match(/\b(http|https)?(:\/\/)?(\S*)\.(\w{2,4})\b/ig);
-    console.log(extracturls);
     var email = extractEmails(data); if (email === null || email === '') email = "Update..";
     var phone = extractPhone(data); if (phone === null || phone === '') phone = "Update..";
     var newPortfolio = { postedby: name, url: portfoliourl, title: data.substring(5, 50), body: data, email: email, phone: phone, comment: "No comments yet", stars: 0 }
@@ -552,7 +544,6 @@ app.get('/savebookmark/:key', requireLogin, cors(), function (req, res, next) {
 
 app.post('/bookmarkthisportfolio/', requireLogin, cors(), function (req, res, next) {
   var url = req.body.url;
-  console.log(url);
   var bookmarkportfolio = { userid: req.session.users._id, url: url }
   db.bookmarkportfolio.insert(bookmarkportfolio);
   res.send("done");
@@ -684,7 +675,6 @@ app.post('/saveSiteText', cors(), function (req, res, next) {
   var text = req.body.text;
   var name = req.session.users.fullname;
   var newData = { postedby: name, url: url, title: "Manually defined", body: text, email: "Update...", phone: "Update...", comment: "No comments yet", stars: 0 }
-  console.log(url);
   db.urldata.insert(newData);
   req.session.users.loadmessage = "Recent activity: Portfolio text saved."
   res.redirect("/");
