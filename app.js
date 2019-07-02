@@ -1,5 +1,5 @@
 var express = require('express');
-var port = process.env.PORT || 3000
+var port = process.env.PORT || 3001
 var bodyParser = require('body-parser');
 var path = require('path');
 var mongojs = require('mongojs');
@@ -221,6 +221,10 @@ app.post('/reset', cors(), function (req, res, next) {
 
 app.use(cors({ origin: '*' }));
 app.get('/dashboard', cors(), function (req, res, next) {
+  // If the user is not logged in, redirect them to the login page.
+  if (req.session.users == null) {
+    res.render("login.ejs", { message: "To view the dashboard, please log in." });
+  }
   var ObjectID = require('mongodb').ObjectID;
   var o_id = req.session.users._id;
   // db.urldata.find({}).skip(0).sort({_id: -1}).limit(1).toArray(function (err, urldata) {
