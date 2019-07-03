@@ -5,60 +5,68 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</script><script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/default.min.css">
 <!-- PROJECT PLUGINS -->
 <script>hljs.initHighlightingOnLoad();</script>
 <script src="js/demo.js"></script>
 <link href="css/demo.css" rel="stylesheet">
+
 <body style="background-color: #f9fedc;">
-<div class="container">
-<center>
-<h1 style="color: blue">BUG Scripts demo from Prose Media LLC</h1>
-	<button type="btn" class="btn btn-info add_new_demo_button">Add New Demo</button>
-		<div class="add_new_demo_div">
-			<form action="uploadDemo" method="post">
-				<textarea class="textarea" type="text" name="topic" placeholder="Topic"></textarea>
-				<textarea name="democode" class="textarea" placeholder="Demo Code"></textarea>
-				<textarea name="demodescription" class="textarea" placeholder="Description"></textarea>
-				<textarea name="html" class="textarea" placeholder="HTML Code"></textarea>
-				<textarea name="js" class="textarea" placeholder="Java Script Code"></textarea>
-				<textarea name="css" class="textarea" placeholder="CSS code"></textarea><hr>
-				<input type="submit" class="btn btn-info" value="Save new demo">
-			</form>
-		</div>
-</center>
-<hr>
-<% demos.forEach(function(demos){%>
-	<div class="panel panel-default">
-	  	<div class="panel-body">
-			<h1><%=demos.topic%></h1><hr>
-			<h3>Demo Section:</h3>
-			<%-demos.democode%>
-			<hr>
-			<h3>Guide Section:</h3>
-			<div class="guideSection">
-			<%=demos.demodescription%>
-			<b>Html code: </b><pre><code class="html"><%=demos.html%></code></pre>
-			<b>JS code: </b><pre><code class="html"><%=demos.js%></code></pre>
-			<b>CSS code: </b><pre><code class="html"><%=demos.css%></code></pre>
-			<hr>
-			<button type="btn" class="btn btn-primary update_demo_btn" data-id="<%=demos._id%>">Update Post</button>
-				<div id="hidden_<%=demos._id%>" class="update_demo_div">
-					<h4>Topic</h4>
+	<div class="container">
+		<center>
+			<h1 style="color: blue">BUG Scripts demo from Prose Media LLC</h1>
+			<button type="btn" class="btn btn-info add_new_demo_button">Add New Demo</button>
+			<div class="add_new_demo_div">
+				<form action="uploadDemo" method="post">
+					<textarea class="textarea" type="text" name="topic" placeholder="Topic"></textarea>
+					<textarea name="democode" class="textarea" placeholder="Demo Code"></textarea>
+					<textarea name="demodescription" class="textarea" placeholder="Description"></textarea>
+					<textarea name="html" class="textarea" placeholder="HTML Code"></textarea>
+					<textarea name="js" class="textarea" placeholder="Java Script Code"></textarea>
+					<textarea name="css" class="textarea" placeholder="CSS code"></textarea>
+					<hr>
+					<input type="submit" class="btn btn-info" value="Save new demo">
+				</form>
+			</div>
+		</center>
+		<hr>
+		<% demos.forEach(function(demos){%>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h1><%=demos.topic%></h1>
+				<hr>
+				<h3>Demo Section:</h3>
+				<%-demos.democode%>
+				<hr>
+				<h3>Guide Section:</h3>
+				<div class="guideSection">
+					<%=demos.demodescription%>
+					<b>Html code: </b>
+					<pre><code class="html"><%=demos.html%></code></pre>
+					<b>JS code: </b>
+					<pre><code class="html"><%=demos.js%></code></pre>
+					<b>CSS code: </b>
+					<pre><code class="html"><%=demos.css%></code></pre>
+					<hr>
+					<button type="btn" class="btn btn-primary update_demo_btn" data-id="<%=demos._id%>">Update Post</button>
+					<div id="hidden_<%=demos._id%>" class="update_demo_div">
+						<h4>Topic</h4>
 						<textarea id="<%=demos._id%>" class="topic_update updatepost textarea"><%=demos.topic%></textarea>
-					<h4>Demo Code:</h4>
+						<h4>Demo Code:</h4>
 						<textarea id="<%=demos._id%>" class="democode_update updatepost textarea"><%=demos.democode%></textarea>
-					<h4>Demo Codebase:</h4>
-						<textarea id="<%=demos._id%>" class="demodescription_update updatepost textarea"><%=demos.demodescription%></textarea>
+						<h4>Demo Codebase:</h4>
+						<textarea id="<%=demos._id%>"
+							class="demodescription_update updatepost textarea"><%=demos.demodescription%></textarea>
 						<textarea id="<%=demos._id%>" class="html_update updatepost textarea"><%=demos.html%></textarea>
 						<textarea id="<%=demos._id%>" class="js_update updatepost textarea"><%=demos.js%></textarea>
 						<textarea id="<%=demos._id%>" class="css_update updatepost textarea"><%=demos.css%></textarea>
-					<h3 id="u_message_<%=demos._id%>"></h3>
+						<h3 id="u_message_<%=demos._id%>"></h3>
+					</div>
 				</div>
 			</div>
 		</div>
+		<%})%>
 	</div>
-<%})%>
-</div>
 </body>

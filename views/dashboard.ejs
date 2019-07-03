@@ -2,10 +2,10 @@
 <link rel="stylesheet" href="http://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css">
 <link rel="stylesheet" href="css/dashboard.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
-
-
+<script type="text/javascript" charset="utf8"
+  src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+  src="https://rawgit.com/kimmobrunfeldt/progressbar.js/1.0.0/dist/progressbar.js"></script>
 <script src="http://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="http://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
 <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
@@ -16,13 +16,13 @@
 <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
 <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
 
-<script src="/js/dashboard.js"></script> 
+<script src="/js/dashboard.js"></script>
 <script src="/js/append.js"></script>
 <% include templates/dashboardheader.ejs %>
 <!-- Page Container -->
-<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">    
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
   <!-- The Grid -->
-  
+
   <div class="w3-row">
     <!-- Left Column -->
     <% include templates/leftcolumn.ejs %>
@@ -31,7 +31,7 @@
     <% include templates/middlecolumn.ejs %>
     <!-- Right Column -->
     <% include templates/rightcolumn.ejs %>
-  <!-- End Grid -->
+    <!-- End Grid -->
   </div>
 </div>
 <br>
@@ -43,30 +43,31 @@
   <p><i class="fa fa-copyright" aria-hidden="true"></i> 2016 Prose Media, LLC. All rights reserved.</p>
 </footer>
 <script>
-// Accordion
-function myFunction(id) {
+  // Accordion
+  function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-theme-d1";
-    } else { 
-        x.className = x.className.replace("w3-show", "");
-        x.previousElementSibling.className = 
+      x.className += " w3-show";
+      x.previousElementSibling.className += " w3-theme-d1";
+    } else {
+      x.className = x.className.replace("w3-show", "");
+      x.previousElementSibling.className =
         x.previousElementSibling.className.replace(" w3-theme-d1", "");
     }
-}
-// Used to toggle the menu on smaller screens when clicking on the menu button
-function openNav() {
+  }
+  // Used to toggle the menu on smaller screens when clicking on the menu button
+  function openNav() {
     var x = document.getElementById("navDemo");
     if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else { 
-        x.className = x.className.replace(" w3-show", "");
+      x.className += " w3-show";
+    } else {
+      x.className = x.className.replace(" w3-show", "");
     }
-}
+  }
 </script>
 </body>
-</html> 
+
+</html>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.2.0/jquery.rateyo.min.js"></script>
