@@ -12,6 +12,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/js/login.js"></script>
 <link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/global.css">
 
 <style>
   body,
@@ -57,7 +58,7 @@
             <input type="password" name="password" class="form-control" placeholder="Enter Password"><br>
             <p><input type="submit" class="w3-btn-block w3-blue w3-round" value="Login"></p>
           </form>
-          <p>Super simple search: only for prosemedia team.</p>
+          <p>Simple content search for the Prose Media team.</p>
           <p><% include templates/followus.ejs%></p>
         </div>
       </div>
@@ -67,12 +68,12 @@
         style="min-width:500px" width="1500" height="1000">
       <div class="w3-display-left w3-padding w3-hide-small" style="width:35%">
         <div class="panel panel-danger">
-          <div class="panel-heading requestaccesserror">REQUEST ACCESS PAGE</div>
+          <div class="panel-heading requestaccesserror text-uppercase">Request access</div>
         </div>
         <div class="w3-black w3-opacity w3-hover-opacity-off w3-padding-large w3-round-large">
-          <h1 class="w3-xlarge">PROSEMEDIA SEARCH ENGINE</h1>
+          <h1 class="w3-xlarge text-uppercase">Prosemedia search engine</h1>
           <hr class="w3-opacity">
-          <p>Request access to Prosemedia team...</p>
+          <p>Request access for the dashboard.</p>
           <form action="request" method="post">
             <input type="text" name="fullname" placeholder="Enter Full Name" class="form-control" required="true"><br>
             <input type="email" name="email" placeholder="Enter your email" class="form-control raemail" required
@@ -81,14 +82,14 @@
               required="true"><br>
             <input type="submit" class="w3-btn-block w3-red w3-round" value="Request Access">
           </form><br>
-          <p>Super simple search: only for prosemedia team.</p>
+          <p>Simple content search for the Prose Media team.</p>
           <p><% include templates/followus.ejs%></p>
         </div>
       </div>
     </div>
 
-    <a class="w3-btn w3-black w3-padding w3-display-right w3-margin-right w3-round w3-hide-small w3-hover-light-grey togglerequestandlogin"
-      onclick="plusDivs(1)">REQUEST ACCESS <i class="fa fa-angle-right"></i></a>
+    <a class="w3-btn w3-black w3-padding w3-display-right w3-margin-right w3-round w3-hide-small w3-hover-light-grey togglerequestandlogin text-uppercase"
+      onclick="plusDivs(1)">Request access&nbsp;<i class="fa fa-angle-right"></i></a>
     <a class="w3-btn-block w3-black w3-padding w3-hide-large w3-hide-medium" onclick="plusDivs(1)">Take Tour <i
         class="fa fa-angle-right"></i></a>
   </header>

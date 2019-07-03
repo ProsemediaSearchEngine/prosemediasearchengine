@@ -52,7 +52,7 @@
           class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Saved Searches</button>
       <div id="Demo2" class="w3-accordion-content w3-container"><br>
         <% bookmark.forEach(function(bookmark){%>
-        <p class="w3-tag w3-small w3-theme bookmakshow" style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></p><br>
+        <p class="w3-tag w3-small w3-theme bookmarkshow" style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></p><br>
         <%})%>
       </div>
       <button onclick="myFunction('Demo3')" class="w3-btn-block w3-theme-l1 w3-left-align"><i
@@ -104,7 +104,7 @@
             <h4>BOOKMARK</h4>
             <p>
               <% bookmark.forEach(function(bookmark){%>
-              <span class="w3-tag w3-small w3-theme bookmakshow"
+              <span class="w3-tag w3-small w3-theme bookmarkshow"
                 style="padding: 0px 10px 0px 10px;"><%=bookmark.key%></span>
               <%})%>
             </p>
@@ -117,10 +117,10 @@
             <p><i class="fa fa-bug w3-xxlarge"></i></p>
             <form method="post" action="uploaddbug" enctype="multipart/form-data">
               <input type="file" name="file" accept="image/*"><br>
-              <input type="text" name="bug" class="input" placeholder="PLEASE SUBMIT BUGS IF FOUND"><br><br>
+              <input type="text" name="bug" class="input" placeholder="Enter feedback"><br><br>
               <textarea name="description" class="textarea"
-                placeholder="PLEASE TELL US MORE ABOUT BUG YOU FOUND"></textarea><br><br>
-              <input type="submit" class="btn btn-primary" value="SUBMIT BUG DESCRIPTION">
+                placeholder="Provide more details on your feedback."></textarea><br><br>
+              <input type="submit" class="btn btn-primary" value="Submit feedback">
             </form>
           </div>
           <!-- Alert Box -->

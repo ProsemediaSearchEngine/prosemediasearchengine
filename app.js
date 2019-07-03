@@ -1,5 +1,5 @@
 var express = require('express');
-var port = process.env.PORT || 3001
+var port = process.env.PORT || 3000
 var bodyParser = require('body-parser');
 var path = require('path');
 var mongojs = require('mongojs');
@@ -194,15 +194,17 @@ app.post('/login', cors(), function (req, res, next) {
   db.users.findOne({ email: req.body.email }, function (err, users) {
     if (!users) {
       req.session.reset();
-      message = 'Seems like you are new user. Please request access and wait for admin to approve the request.';
+      message = "Incorrect login - please try again. If you don't have an account, please request access and wait for approval.";
       res.render("login.ejs", { message: message });
-    } else {
+    }
+    else {
       if (req.body.password === users.password && users.status === true) {
         res.locals.users = users;
         req.session.users = users;
-        req.session.users.loadmessage = "WELCOME " + users.fullname.toUpperCase();
+        req.session.users.loadmessage = "Welcome, " + users.fullname.toUpperCase() + "!";
         res.redirect("/dashboard");
-      } else {
+      }
+      else {
         if (users.status === false) {
           message = 'You are registered but admin access unavailable. Contact admin for more information...';
           res.render("login.ejs", { message: message });

@@ -42,8 +42,6 @@ $(document).ready(function () {
     });
 });
 
-
-
 $(document).ready(function () {
   $('#allurl').DataTable({
     responsive: true,
@@ -53,8 +51,6 @@ $(document).ready(function () {
   });
   $(".dataTables_length select").addClass("selectEntry").attr("placeholder", "Filter search").append('<br><br><br><br>');
   $(".dataTables_filter input").addClass("searchInput").attr("placeholder", "Filter search");
-
-
 });
 
 $(document).on("click", "#post-other-bulk-button", function () {
@@ -71,6 +67,7 @@ $(document).on("click", "#post-other-bulk-button", function () {
       });
   }
 });
+
 function move() {
   var elem = document.getElementById("myBar");
   var width = 0;
@@ -85,6 +82,7 @@ function move() {
     }
   }
 }
+
 $(document).on("click", ".profileimagelinktag", function () {
   $(".profileimagefiletag").click();
 });
@@ -111,14 +109,86 @@ $(document).on("click", "#post-linkedin-bulk-button", function () {
   var bulkurl = $(".bulk-linkedin-input").val();
   bulkurl = bulkurl.replace(/\s+/g, " ").replace(/^\s|\s$/g, "");
   var res = bulkurl.split(" ");
-  if (bulkurl === '' || bulkurl === null || res.length === 1) { alert("PLEASE INCLUDE MORE THAN ONE URLS") }
+  if (bulkurl === '' || bulkurl === null || res.length === 1) {
+    alert("Please include more than 1 URL.")
+  }
   else {
     $.post("/saveLinkedInBulkSite", { bulkurl: bulkurl })
       .done(function (result) {
         alert(result)
-      });
+      }
+    );
   }
 });
+
+/**
+ * Retrieves the results for the given keyword.
+ *
+ *
+ * @param {string} keyword
+ *   The keyword to search for.
+ */
+function getResults(keyword) {
+  if (!keyword) {
+    return;
+  }
+
+  // Displays all links with content matching the searched keyword(s).
+  $.post("/search", { keyword: keyword })
+    .done(function (searchresult) {
+      $('html, body').animate({
+        scrollTop: $(".searchresultpannel").offset().top
+      }, 100);
+      $(".searchresultpannel").addClass("animated tada");
+      $(".searchresultpannel").removeClass("animated tada");
+
+      var r = "";
+      var r2 = "";
+      if (searchresult.length > 0) {
+        r += '<tr>';
+        r += '<th>URL</th>';
+        r += '<th>Teaser</th>';
+        r += '</tr>';
+      }
+
+      for (i = 0; i < searchresult.length; i++) {
+        var url = searchresult[i].url;
+        r += '<tr>';
+        // The URL link.
+        r = r + " " + '<td class="w3-small linkfromsearch"><div class="previewlink_wrapper"><a class="previewlink">' + url + '</a></div><div>(<a class="preview_link w3-small">Preview</a>)</div></td>';
+        r2 = r2 + "<br><br>" + url;
+
+        // The teaser with highlighted keywords.
+        r += '<td class="w3-small highlighted_teaser">';
+        var regex = new RegExp(keyword, "gi");
+        var body = searchresult[i].body;
+        var highlighted_text = body.split(/[.?!,]/).filter(function (n) {
+          return regex.test(n);
+        });
+
+        for (var j = 0; j < highlighted_text.length; j++) {
+          highlighted_text[j] = highlighted_text[j].replace(regex, '<span class="highlighted">' + keyword + '</span>');
+        }
+
+        r += highlighted_text;
+        r += '</td>';
+        r += '</tr>';
+      }
+      $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
+        "<h2>" + (searchresult.length === 1 ? searchresult.length + " RESULT" : searchresult.length + " RESULTS") + " FOR <strong class='keywordsearch'> " + keyword.toUpperCase());
+      if (searchresult.length === 0) {
+        $("#bookmarkandsendemail").addClass("disableclick");
+        r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
+      } else {
+        $("#bookmarkandsendemail").removeClass("disableclick");
+      }
+      $("#searchresult").html(r);
+      $("#bookmarkeyword").val(keyword);
+      $("#emailresult").val(r2);
+      $("#bookmarklink").attr("href", "savebookmark/" + keyword);
+    }
+  );
+}
 
 
 $(document).ready(function () {
@@ -137,66 +207,7 @@ $(document).ready(function () {
     $("#searchload").html("<img src='images/load2.gif' width='150' height='150'>" +
       "<img src='images/search.gif' width='150' height='150'>" +
       "<img src='images/load2.gif' width='150' height='150'>");
-
-    // Displays all links with content matching the searched keyword(s).
-    $.post("/search", { keyword: keyword })
-      .done(function (searchresult) {
-        $('html, body').animate({
-          scrollTop: $(".searchresultpannel").offset().top
-        }, 100);
-        $(".searchresultpannel").addClass("animated tada");
-        $(".searchresultpannel").removeClass("animated tada");
-
-        var r = "";
-        var r2 = "";
-        if (searchresult.length > 0) {
-          r += '<tr>';
-          r += '<th>URL</th>';
-          r += '<th>Teaser</th>';
-          r += '</tr>';
-        }
-
-        for (i = 0; i < searchresult.length; i++) {
-          var url = searchresult[i].url;
-          r += '<tr>';
-          // The URL link.
-          r = r + " " + '<td class="w3-small linkfromsearch"><div class="previewlink_wrapper"><a class="previewlink">' + url + '</a></div><div>(<a class="preview_link w3-small">Preview</a>)</div></td>';
-          r2 = r2 + "<br><br>" + url;
-
-          // The teaser with highlighted keywords.
-          r += '<td class="w3-small highlighted_teaser">';
-          var regex = new RegExp(keyword, "gi");
-          var body = searchresult[i].body;
-          var highlighted_text = body.split(/[.?!,]/).filter(function (n) {
-            return regex.test(n);
-          });
-
-          for (var j = 0; j < highlighted_text.length; j++) {
-            highlighted_text[j] = highlighted_text[j].replace(regex, '<span class="highlighted">' + keyword + '</span>');
-          }
-
-          r += highlighted_text;
-          r += '</td>';
-
-          // The preview link.
-          // r += '<td class="preview_link_teaser">';
-          // r += '<a class="preview_link w3-small">Preview</a>';
-          // r += '</td>';
-          r += '</tr>';
-        }
-        $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
-          "<h2>" + (searchresult.length === 1 ? searchresult.length + " RESULT" : searchresult.length + " RESULTS") + " FOR <strong class='keywordsearch'> " + keyword.toUpperCase());
-        if (searchresult.length === 0) {
-          $("#bookmarkandsendemail").addClass("disableclick");
-          r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
-        } else {
-          $("#bookmarkandsendemail").removeClass("disableclick");
-        }
-        $("#searchresult").html(r);
-        $("#bookmarkeyword").val(keyword);
-        $("#emailresult").val(r2);
-        $("#bookmarklink").attr("href", "savebookmark/" + keyword);
-      });
+    getResults(keyword);
   });
 
   // Client handler for preview link.
@@ -211,37 +222,12 @@ $(document).ready(function () {
       '<button type="button" class="btn btn-primary modalbutton"><a href="' + link + '" target="_blank">Read More </a></button>');
   });
 
-  $(".bookmakshow").on("click", function () {
+  $(".bookmarkshow").on("click", function () {
     var keyword = $(this).text();
     $("#searchload").html("<img src='images/load2.gif' width='150' height='150'>" +
       "<img src='images/search.gif' width='150' height='150'>" +
       "<img src='images/load2.gif' width='150' height='150'>");
-    $.post("/search", { keyword: keyword })
-      .done(function (searchresult) {
-        $('html, body').animate({
-          scrollTop: $(".searchresultpannel").offset().top
-        }, 500);
-        $(".searchresultpannel").addClass("animated tada");
-        $(".searchresultpannel").removeClass("animated tada");
-        var r = "<br>";
-        var r2 = "";
-        for (i = 0; i < searchresult.length; i++) {
-          r = r + " " + '<span class="w3-tag w3-small w3-theme-l4 linkfromsearch"><a class="previewlink">' + searchresult[i].url + '</a></span>';
-          r2 = r2 + "<br><br>" + searchresult[i].url;
-        }
-        $("#searchload").html("<img src='images/done.jpg' width='50' height='50'>" +
-          "<h2>" + searchresult.length + " RESULT FOR <b class='keywordsearch'> " + keyword.toUpperCase() + " </b> KEYWORD</h2>");
-        if (searchresult.length === 0) {
-          $("#bookmarkandsendemail").addClass("disableclick");
-          r = "<p class='errmsg'>Sorry, No results found. Please try again with different keyword</p>";
-        } else {
-          $("#bookmarkandsendemail").removeClass("disableclick");
-        } $("#searchresult").html(r);
-        $("#bookmarkeyword").val(keyword);
-        $("#emailresult").val(r2);
-        $("#bookmarklink").attr("href", "savebookmark/" + keyword);
-        // }, 2000);
-      });
+    getResults(keyword);
   });
 });
 
@@ -255,12 +241,15 @@ $(document).on("click", "#sendemailbutton", function () {
       $(this).remove();
       $.post("/sendresultinemails", { key: keyword, links: links, email: email })
         .done(function (email) {
-          var msg = "The result email was successfully created and sent to " + email;
-          $("#appendemailmsg").append('<div class="panel panel-success animated lightSpeedIn"><div class="panel-heading">' + msg + '</div></div>')
+          // Remove the invalid email message if it exists.
+          $('.invalid-email').remove();
+
+          var msg = "The results were successfully sent to " + email;
+          $("#appendemailmsg")
+            .append('<div class="panel panel-success animated lightSpeedIn"><div class="panel-heading">' + msg + '</div></div>')
         });
     }
   })
-
 });
 
 function validateEmail(email) {
@@ -269,7 +258,7 @@ function validateEmail(email) {
   var dotpos = x.lastIndexOf(".");
   if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
     var msg = "Invalid email: " + email;
-    $("#appendemailmsg").append('<div class="panel panel-danger animated tada"><div class="panel-heading">' + msg + '</div></div>')
+    $("#appendemailmsg").append('<div class="panel panel-danger animated tada invalid-email"><div class="panel-heading">' + msg + '</div></div>')
     return false;
   } else {
     return true;
@@ -536,7 +525,7 @@ $(document).on("click", ".textupload", function () {
     '<div>' +
     '<form action="saveSiteText" method="post">' +
     '<input type="text" name="url" class="input" placeholder="Enter URL" required="true"><br>' +
-    '<textarea name="text" placeholder="INCLUDE SITE TEXT" class="textarea1" required="true"></textarea>' +
+    '<textarea name="text" placeholder="Include site text" class="textarea1" required="true"></textarea>' +
     '<input type="submit" style="display: none;" id="save_text" value="submit">' +
     '</form>' +
     '</div></div></div>');

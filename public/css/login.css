@@ -1,2 +1,9 @@
-.requestaccesssubmitbutton{ background-color: blue; cursor: pointer;}
-.requestaccesssubmitbutton:hover{ background-color: white; color: black; }
+.requestaccesssubmitbutton {
+  background-color: blue;
+  cursor: pointer;
+}
+
+.requestaccesssubmitbutton:hover {
+  background-color: white;
+  color: black;
+}
