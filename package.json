@@ -29,7 +29,7 @@
     "jsftp": "^1.5.5",
     "linkedin-public-profile-parser": "^3.0.2",
     "moment": "^2.24.0",
-    "mongodb": "^2.2.24",
+    "mongodb": "^3.1.13",
     "mongojs": "^2.4.0",
     "node-fetch": "^1.6.3",
     "node-linkedin": "^0.5.6",
